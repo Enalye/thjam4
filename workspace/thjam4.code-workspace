@@ -1,0 +1,14 @@
+{
+    "folders": [
+        {
+            "path": "../game"
+        },
+        {
+            "path": "../atelier"
+        },
+        {
+            "path": "../img-editor"
+        }
+    ],
+    "settings": {}
+}

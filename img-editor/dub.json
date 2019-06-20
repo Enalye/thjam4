@@ -1,0 +1,38 @@
+{
+	"name": "img-editor",
+	"authors": [
+		"Enalye"
+	],
+	"description": "Image Editor",
+	"copyright": "Copyright © 2018, Enalye",
+	"dependencies": {
+		"atelier": {
+			"version": "~master",
+			"path": "../atelier"
+		},
+        "base": {
+			"version": "~master",
+			"path": "../base"
+		}
+	},
+	"targetType": "executable",
+	"workingDirectory": "..",
+	"configurations": [
+		{
+			"name": "linux-build",
+			"platforms": ["linux"],
+			"targetPath": "../bin",
+			"postBuildCommands": [
+				"cp ../lib/*.dll ../bin"
+			]
+		},
+		{
+			"name": "windows-build",
+			"platforms": ["windows"],
+			"targetPath": "../bin",
+			"postBuildCommands": [
+				"copy ..\\lib\\*.dll ..\\bin"
+			]
+		}
+	]
+}
