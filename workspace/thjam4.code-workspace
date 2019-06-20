@@ -7,6 +7,9 @@
             "path": "../atelier"
         },
         {
+            "path": "../grimoire"
+        },
+        {
             "path": "../img-editor"
         }
     ],
