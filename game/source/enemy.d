@@ -4,7 +4,7 @@ import std.conv: to;
 import std.stdio: writeln;
 
 import atelier;
-import game.entity;
+import game.entity, game.shot;
 
 final class Enemy: Entity {
 	private {
@@ -18,4 +18,8 @@ final class Enemy: Entity {
 	override void updateMovement(float deltaTime) {
 
 	}
+
+	override void handleCollision(Shot shot) {
+        // @TODO
+    }
 }

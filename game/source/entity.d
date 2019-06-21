@@ -1,6 +1,7 @@
 module game.entity;
 
 import atelier;
+import game.shot;
 
 abstract class Entity {
     protected {
@@ -9,6 +10,7 @@ abstract class Entity {
             _speed = Vec2f.zero,
             _movementSpeed = Vec2f.zero,
             _acceleration = Vec2f.zero;
+
         bool _isFalling, _canDoubleJump;
 
         enum Direction {
@@ -47,4 +49,5 @@ abstract class Entity {
     abstract void update(float deltaTime);
     abstract void draw();
     abstract void fire();
+    abstract void handleCollision(Shot shot);
 }
