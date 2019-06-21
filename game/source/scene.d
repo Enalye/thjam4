@@ -1,8 +1,9 @@
 module game.scene;
 
+import std.conv: to;
 import atelier;
 import grimoire;
-import game.player, game.camera, game.entity, game.level, game.particles;
+import game.player, game.camera, game.entity, game.level, game.enemy, game.particles;
 
 import std.stdio: writeln;
 
