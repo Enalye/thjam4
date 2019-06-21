@@ -11,7 +11,6 @@ final class Player: Entity {
     private {
         bool        _hasPlayerInput;
         Animation   _currentAnim, _idleAnim, _runAnim, _fallAnim, _stopAnim, _jumpAnim, _recoverAnim;
-        Timer       _trailTimer;
         ShotArray   _shots;
         Timer       _shotTimer, _trailTimer;
         bool        _wasFalling;
