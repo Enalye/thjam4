@@ -83,7 +83,7 @@ final package class Camera {
             mousePosition += _speed;
         }
         _position += _speed * deltaTime;
-writeln(_position, ", ", _speed, ", ", mousePosition);
+        
 		//clamp
 		if(_clip.z > _clip.x) {
 			if(_canvas.size.x > (_clip.z - _clip.x))

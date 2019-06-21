@@ -40,6 +40,9 @@ final class SceneGui: GuiElementCanvas {
     override void onEvent(Event event) {
         switch(event.type) with(EventType) {
         case MouseUpdate:
+        writeln(event.position);
+            if(isNaN(event.position.x) || isNaN(event.position.y))
+                break;
             _camera.mousePosition = event.position;
             break;
         default:
