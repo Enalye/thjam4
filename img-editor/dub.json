@@ -9,10 +9,6 @@
 		"atelier": {
 			"version": "~master",
 			"path": "../atelier"
-		},
-        "base": {
-			"version": "~master",
-			"path": "../base"
 		}
 	},
 	"targetType": "executable",
