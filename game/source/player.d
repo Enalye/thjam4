@@ -4,11 +4,16 @@ import std.conv: to;
 import atelier;
 import game.entity;
 
+import derelict.sdl2.sdl;
+import std.stdio: writeln;
+
 final class Player: Entity {
     private {
         bool _hasPlayerInput;
         Animation _idleAnim, _runAnim;
     }
+
+    Vec2f mousePosition = Vec2f.zero;
 
     this() {
         _idleAnim = new Animation("alice.idle");
@@ -59,6 +64,13 @@ final class Player: Entity {
             _speed.y = 0f;
             _acceleration.y += -7f;
         }
+
+        if(isButtonDown(SDL_BUTTON_LEFT)) {
+            writeln("yes");
+            fire();
+        } else {
+            writeln("nope");
+        }
     }
 
     override void update(float deltaTime) {
@@ -71,5 +83,9 @@ final class Player: Entity {
             _runAnim.draw(_position);
         else
             _idleAnim.draw(_position);
+    }
+
+    override void fire() {
+        writeln(mousePosition);
     }
 }

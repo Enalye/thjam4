@@ -43,6 +43,7 @@ final class SceneGui: GuiElementCanvas {
             if(isNaN(event.position.x) || isNaN(event.position.y))
                 break;
             _camera.mousePosition = event.position;
+            _player.mousePosition = event.position;
             break;
         default:
             break;
