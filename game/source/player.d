@@ -1,8 +1,11 @@
 module game.player;
 
 import std.conv: to;
+import std.stdio: writeln;
 import atelier;
 import game.entity, game.particles;
+
+import derelict.sdl2.sdl;
 
 final class Player: Entity {
     private {
@@ -10,6 +13,8 @@ final class Player: Entity {
         Animation _idleAnim, _runAnim;
         Timer _trailTimer;
     }
+
+    Vec2f mousePosition = Vec2f.zero;
 
     this() {
         _idleAnim = new Animation("alice.idle");
@@ -62,6 +67,10 @@ final class Player: Entity {
             _acceleration.y += -7f;
         }
 
+        if(isButtonDown(SDL_BUTTON_LEFT)) {
+            fire();
+        }
+
         //Castlevania trail effect
         _trailTimer.update(deltaTime);
         if(!_trailTimer.isRunning) {
@@ -95,5 +104,9 @@ final class Player: Entity {
             _runAnim.draw(_position);
         else
             _idleAnim.draw(_position);
+    }
+
+    override void fire() {
+        // @TODO
     }
 }

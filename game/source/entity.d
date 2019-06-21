@@ -46,4 +46,5 @@ abstract class Entity {
     abstract void updateMovement(float deltaTime);
     abstract void update(float deltaTime);
     abstract void draw();
+    abstract void fire();
 }
