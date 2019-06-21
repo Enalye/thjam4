@@ -1,11 +1,11 @@
 module game.player;
 
 import std.conv: to;
+import std.stdio: writeln;
 import atelier;
 import game.entity;
 
 import derelict.sdl2.sdl;
-import std.stdio: writeln;
 
 final class Player: Entity {
     private {
@@ -66,10 +66,7 @@ final class Player: Entity {
         }
 
         if(isButtonDown(SDL_BUTTON_LEFT)) {
-            writeln("yes");
             fire();
-        } else {
-            writeln("nope");
         }
     }
 
@@ -86,6 +83,6 @@ final class Player: Entity {
     }
 
     override void fire() {
-        writeln(mousePosition);
+        // @TODO
     }
 }

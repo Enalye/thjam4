@@ -1,7 +1,10 @@
 module game.scene;
 
 import atelier;
-import game.player, game.camera, game.entity, game.level;
+import grimoire;
+import game.entity, game.player, game.enemy, game.camera, game.level;
+
+import std.stdio: writeln;
 
 void onSceneStart() {
     removeRootGuis();
@@ -10,9 +13,12 @@ void onSceneStart() {
 
 final class SceneGui: GuiElementCanvas {
     private {
-        Player _player;
-        Camera _camera;
-        Level _level;
+        Player   _player;
+        Camera   _camera;
+        Level    _level;
+        GrEngine _vm;
+
+        IndexedArray!(Enemy, 100u) _enemies;
     }
 
     this() {
@@ -25,6 +31,7 @@ final class SceneGui: GuiElementCanvas {
         _camera.followEntity(_player);
 
         _level = fetch!Level("test");
+        _vm    = new GrEngine;
     }
 
     /*~this() {
@@ -35,6 +42,14 @@ final class SceneGui: GuiElementCanvas {
         _camera.update(deltaTime);
         _player.updatePhysic(deltaTime);
         _player.update(deltaTime);
+
+        if(_vm.hasCoroutines) {
+            _vm.process();
+        }
+
+        if(_vm.isPanicking) {
+            writeln("Unhandled Exception: " ~ to!string(_vm.panicMessage));
+        }
     }
 
     override void onEvent(Event event) {
