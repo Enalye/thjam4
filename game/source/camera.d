@@ -78,12 +78,12 @@ final package class Camera {
 			_position = _translationOrigin.lerp(_translationDestination, easeOutSine(_translationTimer.time));
 		}
         else if(_isFollowingEntity) {
-            const Vec2f targetPosition = _followedEntity.position.lerp(mousePosition, .25f);
+            const Vec2f targetPosition = _followedEntity.position.lerp(mousePosition, .2f);
             _speed = _followedEntity.speed + (targetPosition - _position) * deltaTime * 0.3f;
             mousePosition += _speed;
         }
         _position += _speed * deltaTime;
-        
+writeln(_position, ", ", _speed, ", ", mousePosition);
 		//clamp
 		if(_clip.z > _clip.x) {
 			if(_canvas.size.x > (_clip.z - _clip.x))

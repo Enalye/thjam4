@@ -1,7 +1,7 @@
 module game.scene;
 
 import atelier;
-import game.player, game.camera, game.entity;
+import game.player, game.camera, game.entity, game.level;
 
 void onSceneStart() {
     removeRootGuis();
@@ -12,6 +12,7 @@ final class SceneGui: GuiElementCanvas {
     private {
         Player _player;
         Camera _camera;
+        Level _level;
     }
 
     this() {
@@ -22,6 +23,8 @@ final class SceneGui: GuiElementCanvas {
         _player = new Player;
         _camera = createCamera(canvas);
         _camera.followEntity(_player);
+
+        _level = fetch!Level("test");
     }
 
     /*~this() {
@@ -46,6 +49,7 @@ final class SceneGui: GuiElementCanvas {
 
     override void draw() {
         auto position = getCameraPosition();
+        _level.draw();
         _player.draw();
         drawFilledRect(Vec2f(position.x - screenWidth / 2f, 0f), Vec2f(screenWidth, 5f), Color.white);
     }

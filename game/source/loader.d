@@ -3,6 +3,8 @@ module game.loader;
 import std.path, std.file, std.conv;
 import atelier;
 
+import game.level;
+
 private {
     alias OnLoadCompleteCallback = void function();
 }
@@ -27,6 +29,7 @@ class LoaderGui: GuiElement {
         loadFont();
         loadSound();
         loadBgm();
+        loadLevels();
         auto deltaTime = MonoTime.currTime() - startTime;
         writeln(deltaTime);
         //Load completed
@@ -154,5 +157,17 @@ void loadBgm() {
     auto files = dirEntries("media/bgm/", "{*.ogg}", SpanMode.depth);
     foreach(file; files) {
         musicCache.set(new Music(file), baseName(file, ".ogg"));
+    }
+}
+
+void loadLevels() {
+    auto levelCache = new ResourceCache!Level;
+    setResourceCache!Level(levelCache);
+
+    auto files = dirEntries("data/levels/", "{*.json}", SpanMode.depth);
+    foreach(file; files) {
+        JSONValue json = parseJSON(readText(file));
+        auto level = new Level(json);
+        levelCache.set(level, baseName(file, ".json"));
     }
 }
