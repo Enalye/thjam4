@@ -2,12 +2,13 @@ module game.player;
 
 import std.conv: to;
 import atelier;
-import game.entity;
+import game.entity, game.particles;
 
 final class Player: Entity {
     private {
         bool _hasPlayerInput;
         Animation _idleAnim, _runAnim;
+        Timer _trailTimer;
     }
 
     this() {
@@ -19,6 +20,7 @@ final class Player: Entity {
         _size = to!Vec2f(_idleAnim.tileSize);
         _position = Vec2f(0f, -_size.y / 2f);
         _speed = Vec2f.zero;
+        _trailTimer.start(.1f);
     }
 
     override void updateMovement(float deltaTime) {
@@ -45,7 +47,7 @@ final class Player: Entity {
             _runAnim.flip = Flip.NoFlip;
             _hasPlayerInput = true;
         }
-        if(isMovingHorizontally) {
+        if(!isMovingHorizontally) {
             _movementSpeed.x *= deltaTime * _isFalling ? .999f : .8f;
             _hasPlayerInput = false;
         }
@@ -58,6 +60,28 @@ final class Player: Entity {
             _canDoubleJump = false;
             _speed.y = 0f;
             _acceleration.y += -7f;
+        }
+
+        //Castlevania trail effect
+        _trailTimer.update(deltaTime);
+        if(!_trailTimer.isRunning) {
+            final class TrailParticle: Spark {
+                override void update(float deltaTime) {
+                    sprite.color = Color(
+                        .8f, .8f, 1f,
+                        lerp(.8f, 0f, easeInOutSine(time / timeToLive)));
+                }
+            }
+
+            Spark spark = new TrailParticle;
+            if(_hasPlayerInput && !_isFalling)
+                spark.sprite = _runAnim.getCurrentSprite();
+            else
+                spark.sprite = _idleAnim.getCurrentSprite();
+            spark.position = _position;
+            spark.timeToLive = 2f;
+            spawnSpark(spark);
+            _trailTimer.start(.1f);
         }
     }
 
