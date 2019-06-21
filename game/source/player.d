@@ -10,8 +10,9 @@ import derelict.sdl2.sdl;
 final class Player: Entity {
     private {
         bool _hasPlayerInput;
-        Animation _idleAnim, _runAnim;
+        Animation _currentAnim, _idleAnim, _runAnim, _fallAnim, _stopAnim, _jumpAnim, _recoverAnim;
         Timer _trailTimer;
+        bool _wasFalling;
     }
 
     Vec2f mousePosition = Vec2f.zero;
@@ -19,8 +20,13 @@ final class Player: Entity {
     this() {
         _idleAnim = new Animation("alice.idle");
         _runAnim = new Animation("alice.run");
+        _fallAnim = new Animation("alice.fall");
+        _stopAnim = new Animation("alice.stop");
+        _jumpAnim = new Animation("alice.jump");
+        _recoverAnim = new Animation("alice.recover", TimeMode.Stopped);
         _idleAnim.start(.5f, TimeMode.Loop);
         _runAnim.start(.5f, TimeMode.Loop);
+        _currentAnim = _idleAnim;
 
         _size = to!Vec2f(_idleAnim.tileSize);
         _position = Vec2f(0f, -_size.y / 2f);
@@ -39,6 +45,10 @@ final class Player: Entity {
             _direction = Direction.Left;
             _idleAnim.flip = Flip.HorizontalFlip;
             _runAnim.flip = Flip.HorizontalFlip;
+            _fallAnim.flip = Flip.HorizontalFlip;
+            _stopAnim.flip = Flip.HorizontalFlip;
+            _jumpAnim.flip = Flip.HorizontalFlip;
+            _recoverAnim.flip = Flip.HorizontalFlip;
             _hasPlayerInput = true;
         }
         if(isKeyDown("right")) {
@@ -50,6 +60,10 @@ final class Player: Entity {
             _direction = Direction.Right;
             _idleAnim.flip = Flip.NoFlip;
             _runAnim.flip = Flip.NoFlip;
+            _fallAnim.flip = Flip.NoFlip;
+            _stopAnim.flip = Flip.NoFlip;
+            _jumpAnim.flip = Flip.NoFlip;
+            _recoverAnim.flip = Flip.NoFlip;
             _hasPlayerInput = true;
         }
         if(!isMovingHorizontally) {
@@ -58,6 +72,8 @@ final class Player: Entity {
         }
 
         if(!_isFalling && getKeyDown("jump")) {
+            _jumpAnim.start(.5f, TimeMode.Once);
+            _currentAnim = _jumpAnim;
             _acceleration.y += -8f;
             _isFalling = true;
         }
@@ -67,6 +83,40 @@ final class Player: Entity {
             _acceleration.y += -7f;
         }
 
+        //Animation selection
+
+        //Recover phase
+        if(_recoverAnim.isRunning) {
+            _currentAnim = _recoverAnim;
+        }
+        else if(_wasFalling && !_isFalling) {
+            if(_currentAnim != _recoverAnim)
+                _recoverAnim.start(.15f);
+            _currentAnim = _recoverAnim;
+        }
+        else if(_isFalling) {
+            if(_speed.y > .1f) {
+                if(_currentAnim != _fallAnim)
+                    _fallAnim.start(.5f);
+                _currentAnim = _fallAnim;
+            }
+            else {
+                _currentAnim = _jumpAnim;
+            }
+        }
+        else if(_hasPlayerInput && !_isFalling) {
+            _currentAnim = _runAnim;
+        }
+        else if(_movementSpeed.x > .1f || _movementSpeed.x < -.1f) {
+            if(_currentAnim != _stopAnim)
+                _stopAnim.start(.5f);
+            _currentAnim = _stopAnim;
+        }
+        else {
+            _currentAnim = _idleAnim;
+        }
+
+        //Shoot
         if(isButtonDown(SDL_BUTTON_LEFT)) {
             fire();
         }
@@ -83,27 +133,26 @@ final class Player: Entity {
             }
 
             Spark spark = new TrailParticle;
-            if(_hasPlayerInput && !_isFalling)
-                spark.sprite = _runAnim.getCurrentSprite();
-            else
-                spark.sprite = _idleAnim.getCurrentSprite();
+            spark.sprite = _currentAnim.getCurrentSprite();
             spark.position = _position;
             spark.timeToLive = 2f;
             spawnSpark(spark);
             _trailTimer.start(.1f);
         }
+
+        _wasFalling = _isFalling;
     }
 
     override void update(float deltaTime) {
         _idleAnim.update(deltaTime);
         _runAnim.update(deltaTime);
+        _fallAnim.update(deltaTime);
+        _stopAnim.update(deltaTime);
+        _recoverAnim.update(deltaTime);
     }
 
     override void draw() {
-        if(_hasPlayerInput && !_isFalling)
-            _runAnim.draw(_position);
-        else
-            _idleAnim.draw(_position);
+        _currentAnim.draw(_position);
     }
 
     override void fire() {
