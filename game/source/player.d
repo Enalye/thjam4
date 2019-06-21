@@ -22,7 +22,9 @@ final class Player: Entity {
     }
 
     override void updateMovement(float deltaTime) {
+        bool isMovingHorizontally;
         if(isKeyDown("left")) {
+            isMovingHorizontally = true;
             _movementSpeed.x = _movementSpeed.x > -5f ?
                 _movementSpeed.x - deltaTime * (_isFalling ? .3f : .8f) :
                 -5f;
@@ -32,7 +34,8 @@ final class Player: Entity {
             _runAnim.flip = Flip.HorizontalFlip;
             _hasPlayerInput = true;
         }
-        else if(isKeyDown("right")) {
+        if(isKeyDown("right")) {
+            isMovingHorizontally = true;
             _movementSpeed.x = _movementSpeed.x < 5f ?
                 _movementSpeed.x + deltaTime * (_isFalling ? .3f : .8f) :
                 5f;
@@ -42,7 +45,7 @@ final class Player: Entity {
             _runAnim.flip = Flip.NoFlip;
             _hasPlayerInput = true;
         }
-        else {
+        if(isMovingHorizontally) {
             _movementSpeed.x *= deltaTime * _isFalling ? .999f : .8f;
             _hasPlayerInput = false;
         }
