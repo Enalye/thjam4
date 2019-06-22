@@ -38,7 +38,7 @@ final class Doll: Entity {
 		_threadLength = threadLength;
 		_position = position;
         _type     = type;
-        
+
         final switch(_type) with(DollType) { 
         case DollType.SHOT:
             name = "Shot Doll";
