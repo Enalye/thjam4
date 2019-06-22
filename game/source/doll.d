@@ -6,11 +6,22 @@ import game.entity, game.shot, game.global;
 
 alias DollArray = IndexedArray!(Doll, 8);
 
+enum DollType {
+    SHOT,
+    LASER,
+    EXPLOSIVE,
+    LANCE,
+    TELEPORT,
+    BOOMERANG,
+    SHIELD
+}
+
 final class Doll: Entity {
 	private {
-		Sprite _sprite; // @TODO animations instead
-		float  _threadLength; // Max length from player
-		Vec2f  _target;
+		Sprite   _sprite; // @TODO animations instead
+		float    _threadLength; // Max length from player
+		Vec2f    _target;
+        DollType _type;
 	}
 
     bool isLocked;
@@ -18,11 +29,12 @@ final class Doll: Entity {
 	Vec2f mousePosition = Vec2f.zero;
 	Vec2f playerPosition = Vec2f.zero;
 
-	this(Vec2f position, Color color) {
+	this(Vec2f position, Color color, DollType type, float threadLength = 250f) {
 		_sprite = fetch!Sprite("doll");
         _sprite.color = color;
-		_threadLength = 250f;
+		_threadLength = threadLength;
 		_position = position;
+        _type     = type;
 	}
 
 	override void updateMovement(float deltaTime) {
@@ -42,6 +54,7 @@ final class Doll: Entity {
             else {
                 _target = playerPosition + (playerToDoll * _threadLength);
             }
+            
             _acceleration = (_target - _position).normalized * rlerp(0f, 200f, _target.distance(_position)) * 2f;
         }
 

@@ -39,13 +39,13 @@ final class Player: Entity {
         playerShots = new ShotArray();
         dolls = new DollArray();
 
-        dolls.push(new Doll(_position, Color.fromRGB(0xFF4500)));
-        dolls.push(new Doll(_position, Color.fromRGB(0xFFA500)));
-        dolls.push(new Doll(_position, Color.fromRGB(0xFFFF33)));  
-        dolls.push(new Doll(_position, Color.fromRGB(0x32CD32)));
-        dolls.push(new Doll(_position, Color.fromRGB(0x00BFFF)));
-        dolls.push(new Doll(_position, Color.fromRGB(0x4169E1)));
-        dolls.push(new Doll(_position, Color.fromRGB(0xBA55D3)));
+        dolls.push(new Doll(_position, Color.fromRGB(0xFF4500), DollType.SHOT));
+        dolls.push(new Doll(_position, Color.fromRGB(0xFFA500), DollType.LASER, 50f));
+        dolls.push(new Doll(_position, Color.fromRGB(0xFFFF33), DollType.EXPLOSIVE));  
+        dolls.push(new Doll(_position, Color.fromRGB(0x32CD32), DollType.LANCE));
+        dolls.push(new Doll(_position, Color.fromRGB(0x00BFFF), DollType.TELEPORT));
+        dolls.push(new Doll(_position, Color.fromRGB(0x4169E1), DollType.BOOMERANG));
+        dolls.push(new Doll(_position, Color.fromRGB(0xBA55D3), DollType.SHIELD));
 
 
         _currentDoll = dolls[_dollIndex];
