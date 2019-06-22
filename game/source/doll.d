@@ -2,7 +2,7 @@ module game.doll;
 
 import atelier;
 import std.stdio: writeln;
-import game.entity, 	game.shot;
+import game.entity, game.shot, game.global;
 
 alias DollArray = IndexedArray!(Doll, 7);
 
@@ -51,7 +51,13 @@ final class Doll: Entity {
 	}
 
 	override void fire() {
-        // @TODO
+        createPlayerShot(_position,
+                Vec2f.one,
+                5,
+                Color.red,
+                mousePosition - _position,
+                10f,
+                5 * 60f);
 	}
 
 

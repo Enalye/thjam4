@@ -172,8 +172,11 @@ final class Player: Entity {
 
         _shotTimer.update(deltaTime);
         _wasFalling = _isFalling;
+    }
 
+    override void updatePhysic(float deltaTime) {
         _currentDoll.updatePhysic(deltaTime);
+        Entity.updatePhysic(deltaTime);
     }
 
     override void update(float deltaTime) {
@@ -202,33 +205,12 @@ final class Player: Entity {
 
     override void fire() {
         if(!_shotTimer.isRunning) {
-            createPlayerShot(_position,
-                Vec2f.one,
-                5,
-                Color.red,
-                mousePosition - _position,
-                10f,
-                5 * 60f);
+            _currentDoll.fire();
             _shotTimer.start(.2f);
         }
     }
 
     override void handleCollision(Shot shot) {
         // @TODO
-    }
-
-    private void createPlayerShot(Vec2f pos, Vec2f scale, int damage, Color color, Vec2f direction, float speed, float timeToLive) {
-        Shot shot = new Shot("doll_1", color, scale);
-
-        Vec2f normalizedDirection = direction.normalized;
-
-        shot.position    = pos;
-        shot.direction   = normalizedDirection * speed;
-        shot.timeToLive  = timeToLive;
-        shot.damage      = damage;
-        shot.spriteAngle = normalizedDirection.angle();
-
-        playerShots.push(shot);
-        //playSound(SoundType.Shot);
     }
 }
