@@ -5,7 +5,7 @@ import std.stdio: writeln;
 import std.algorithm.comparison;
 
 import atelier;
-import game.entity, game.shot;
+import game.entity, game.shot, game.camera;
 
 alias EnemyArray = IndexedArray!(Enemy, 100u);
 
@@ -82,9 +82,9 @@ final class Enemy: Entity {
 
 	}
 
-	override void handleCollision(Shot shot) {
-		if(shot.isAlive) {
-        	_life = max(0, _life - shot.damage);
-        }
+	override void handleCollision(int damage) {
+        _life = max(0, _life - damage);
+        if(_life <= 0)
+            shakeCamera(Vec2f(10f, 5f), .5f);
     }
 }

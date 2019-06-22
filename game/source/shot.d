@@ -57,7 +57,7 @@ class Shot {
 
     bool handleCollision(Entity entity) {
         if(entity.position.distance(_position) < _radius) {
-            entity.handleCollision(this);
+            entity.handleCollision(damage);
             _isAlive = false;
             return true;
         }

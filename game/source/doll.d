@@ -29,6 +29,7 @@ final class Doll: Entity {
 
 	Vec2f mousePosition = Vec2f.zero;
 	Vec2f playerPosition = Vec2f.zero;
+    string name;
 
 	this(Player player, Vec2f position, Color color, DollType type, float threadLength = 250f) {
         _player = player;
@@ -37,6 +38,30 @@ final class Doll: Entity {
 		_threadLength = threadLength;
 		_position = position;
         _type     = type;
+        
+        final switch(_type) with(DollType) { 
+        case DollType.SHOT:
+            name = "Shot Doll";
+            break;
+        case DollType.LASER:
+            name = "Laser Doll";
+            break;
+        case DollType.EXPLOSIVE:
+            name = "Explosive Doll";
+            break;
+        case DollType.LANCE:
+            name = "Lance Doll";
+            break;
+        case DollType.TELEPORT:
+            name = "Teleportation Doll";
+            break;
+        case DollType.BOOMERANG:
+            name = "Boomerang Doll";
+            break;
+        case DollType.SHIELD:
+            name = "Shield Doll";
+            break;
+        }
 	}
 
 	override void updateMovement(float deltaTime) {
@@ -105,7 +130,7 @@ final class Doll: Entity {
 	}
 
 
-    override void handleCollision(Shot shot) {
+    override void handleCollision(int damage) {
         // @TODO
     }
 }

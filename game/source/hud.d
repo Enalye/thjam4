@@ -8,7 +8,21 @@ final class HudGui: GuiElement {
     Player player;
 
     private {
+        Label _dollLabel;
         float _lifeRatio = 1f, _lastBarRatio = 0f;
+    }
+
+    this() {
+        _dollLabel = new Label(fetch!Font("VeraMono"), "");
+        _dollLabel.position = Vec2f(50f, 70f);
+        _dollLabel.anchor = Vec2f.zero;
+        addChildGui(_dollLabel);
+    }
+
+    void changeDoll() {
+        if(!player)
+            return;
+        _dollLabel.text = player.currentDoll.name;
     }
 
     override void update(float deltaTime) {

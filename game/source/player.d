@@ -4,7 +4,7 @@ import std.conv: to;
 import std.stdio: writeln;
 import atelier;
 import game.entity, game.particles, game.shot, game.global, game.doll, game.scene, game.enemy;
-import game.dollthread;
+import game.dollthread, game.camera;
 
 import derelict.sdl2.sdl;
 
@@ -12,13 +12,17 @@ final class Player: Entity {
     private {
         bool        _hasPlayerInput;
         Animation   _currentAnim, _idleAnim, _runAnim, _fallAnim, _stopAnim, _jumpAnim, _recoverAnim;
-        Timer       _shotTimer, _trailTimer;
+        Timer       _shotTimer, _trailTimer, _iframesTimer;
         bool        _wasFalling;
         Doll        _currentDoll;
         DollThread  _dollThread;
     }
 
     Vec2f mousePosition = Vec2f.zero;
+
+    @property {
+        Doll currentDoll() { return _currentDoll; }
+    }
 
     this() {
         _idleAnim = new Animation("alice.idle");
@@ -55,6 +59,7 @@ final class Player: Entity {
         _dollThread.init();
 
         hud.player = this;
+        hud.changeDoll();
     }
 
     private {
@@ -75,6 +80,8 @@ final class Player: Entity {
         _currentDoll.position = _position;
         _dollThread.doll = _currentDoll;
         _dollThread.init();
+
+        hud.changeDoll();
         
         _dollSelectTimer.start(.5f);
     }
@@ -233,6 +240,7 @@ final class Player: Entity {
     }
 
     override void update(float deltaTime) {
+        _iframesTimer.update(deltaTime);
         _dollSelectTimer.update(deltaTime);
 
         _dollThread.doll   = _currentDoll;
@@ -256,6 +264,10 @@ final class Player: Entity {
 
     override void draw() {
         _dollThread.draw();
+        if(_iframesTimer.isRunning)
+            _currentAnim.tileset.blend = Blend.AdditiveBlending;
+        else
+            _currentAnim.tileset.blend = Blend.AlphaBlending;
         _currentAnim.draw(_position);
         _currentDoll.draw();
     }
@@ -267,7 +279,26 @@ final class Player: Entity {
         }
     }
 
-    override void handleCollision(Shot shot) {
-        // @TODO
+    override void handleCollision(int damage) {
+        if(_iframesTimer.isRunning)
+            return;
+        _life = _life - damage;
+        if(_life < 0)
+            _life = 0;
+        _isFalling = true;
+        _canDoubleJump = false;
+        
+        final switch(_direction) with(Direction) {
+        case Right:
+            _movementSpeed.x = -10f;
+            _speed.y = -5f;
+            break;
+        case Left:
+            _movementSpeed.x = 10f;
+            _speed.y = -5f;
+            break;
+        }
+        shakeCamera(Vec2f(25f, 15f), 1f);
+        _iframesTimer.start(.2f);
     }
 }
