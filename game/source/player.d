@@ -46,6 +46,8 @@ final class Player: Entity {
         _dollThread.doll = _currentDoll;
         _dollThread.player = this;
         _dollThread.init();
+
+        hud.player = this;
     }
 
     private {
