@@ -2,7 +2,7 @@ module game.doll;
 
 import atelier;
 import std.stdio: writeln;
-import game.entity, game.shot, game.global;
+import game.entity, game.shot, game.global, game.player;
 
 alias DollArray = IndexedArray!(Doll, 8);
 
@@ -18,6 +18,7 @@ enum DollType {
 
 final class Doll: Entity {
 	private {
+        Player   _player;
 		Sprite   _sprite; // @TODO animations instead
 		float    _threadLength; // Max length from player
 		Vec2f    _target;
@@ -29,7 +30,8 @@ final class Doll: Entity {
 	Vec2f mousePosition = Vec2f.zero;
 	Vec2f playerPosition = Vec2f.zero;
 
-	this(Vec2f position, Color color, DollType type, float threadLength = 250f) {
+	this(Player player, Vec2f position, Color color, DollType type, float threadLength = 250f) {
+        _player = player;
 		_sprite = fetch!Sprite("doll");
         _sprite.color = color;
 		_threadLength = threadLength;
@@ -91,6 +93,9 @@ final class Doll: Entity {
         case DollType.LANCE:
             break;
         case DollType.TELEPORT:
+            Vec2f oldPosition = _player.position;
+            _player.position   = _position;
+            _position         = oldPosition;
             break;
         case DollType.BOOMERANG:
             break;
