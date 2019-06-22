@@ -82,7 +82,7 @@ final class SceneGui: GuiElementCanvas {
             enemy.updatePhysic(deltaTime);
             enemy.update(deltaTime);
 
-            if(!enemy.isAlive) {
+            if(enemy.toDespawn) {
                 enemies.markInternalForRemoval(index);
             }
         }

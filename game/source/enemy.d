@@ -13,20 +13,22 @@ final class Enemy: Entity {
 	private {
 		Animation _currentAnim, _idleAnim, _deathAnim;
 		float _lastBarRatio = 1f, _lifeRatio = 1f;
-		Timer _deathTimer;
+		bool showLifeBar = true;
 	}
 
 	this(int index, string name, Vec2f position) {
-		_index    = index;
-		_position = position;
-		_idleAnim = new Animation(name ~ ".idle");
+		_index     = index;
+		_position  = position;
+		_idleAnim  = new Animation(name ~ ".idle");
 		_deathAnim = new Animation(name ~ ".death");
+
 		_idleAnim.start(.5f, TimeMode.Loop);
 		_currentAnim = _idleAnim;
 	}
 
 	@property {
-	    bool isAlive() { return (_life > 0) || _deathTimer.isRunning(); }
+	    bool isAlive() { return (_life > 0); }
+	    bool toDespawn() { return !isAlive() && !_deathAnim.isRunning(); }
 	}
 
 	override void updateMovement(float deltaTime) {
@@ -38,25 +40,30 @@ final class Enemy: Entity {
 		}
 
 		// Logic mainly implemented in coroutines
-		if(_life == 0) {
-			_deathTimer.start(.5f);
-			_deathAnim.start(.5f, TimeMode.Once);
+		if((_currentAnim == _idleAnim) && (_life == 0)) {
+			showLifeBar = false;
+			_deathAnim.start(.5f);
             _currentAnim = _deathAnim;
 		}
 	}
 
 	override void update(float deltaTime) {
-		_idleAnim.update(deltaTime);
+		_currentAnim.update(deltaTime);
 
 		// Lifebar
-        _lifeRatio = cast(float)(_life) / _maxLife;
-        _lastBarRatio = lerp(_lastBarRatio, _lifeRatio, deltaTime * .1f);
+		if(showLifeBar) {
+        	_lifeRatio = cast(float)(_life) / _maxLife;
+        	_lastBarRatio = lerp(_lastBarRatio, _lifeRatio, deltaTime * .1f);
+        }
 	}
 
 	override void draw() {
 		// writeln(_position);
 		_currentAnim.draw(_position);
-		drawLifeBar();
+
+		if(showLifeBar) {
+			drawLifeBar();
+		}
 	}
 
 	private void drawLifeBar() {
