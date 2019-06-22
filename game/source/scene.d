@@ -77,8 +77,12 @@ final class SceneGui: GuiElementCanvas {
         _player.update(deltaTime);
         _sparks.update(deltaTime);
 
-        foreach(Enemy enemy; enemies) {
+        foreach(Enemy enemy, uint index; enemies) {
             enemy.update(deltaTime);
+
+            if(!enemy.isAlive) {
+                enemies.markInternalForRemoval(index);
+            }
         }
 
         foreach(Shot shot, uint index; playerShots) {
@@ -95,6 +99,7 @@ final class SceneGui: GuiElementCanvas {
             writeln("Unhandled Exception: " ~ to!string(vm.panicMessage));
         }
 
+        enemies.sweepMarkedData();
         playerShots.sweepMarkedData();
     }
 

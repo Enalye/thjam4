@@ -13,6 +13,7 @@ final class Enemy: Entity {
 	private {
 		Animation _currentAnim, _idleAnim;
 		float _lastBarRatio = 1f, _lifeRatio = 1f;
+		Timer _deathTimer;
 	}
 
 	this(int index, string name, Vec2f position) {
@@ -23,8 +24,15 @@ final class Enemy: Entity {
 		_currentAnim = _idleAnim;
 	}
 
+	@property {
+	    bool isAlive() { return (_life > 0) || _deathTimer.isRunning(); }
+	}
+
 	override void updateMovement(float deltaTime) {
-		// @TODO implement logic in coroutines (to drive movementSpeed)
+		// Logic mainly implemented in coroutines
+		if(_life == 0) {
+			_deathTimer.start(0.5f);
+		}
 	}
 
 	override void update(float deltaTime) {

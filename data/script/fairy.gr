@@ -14,6 +14,11 @@ task move(int enemyIdx) {
         setPosition(enemyIdx, x, y);
         yield;
 
+        // Check enemy is still alive after the yield
+        if(!isAlive(enemyIdx)) {
+        	kill;
+        }
+
         if(goesLeft and (x < (baseX - 100f))) {
     		goesLeft = false;
     	}
