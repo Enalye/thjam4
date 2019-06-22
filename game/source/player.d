@@ -3,7 +3,7 @@ module game.player;
 import std.conv: to;
 import std.stdio: writeln;
 import atelier;
-import game.entity, game.particles, game.shot, game.global, game.doll, game.scene;
+import game.entity, game.particles, game.shot, game.global, game.doll, game.scene, game.enemy;
 
 import derelict.sdl2.sdl;
 
@@ -173,11 +173,24 @@ final class Player: Entity {
 
         _shotTimer.update(deltaTime);
         _wasFalling = _isFalling;
+
+        // Update movement of player shots
+        foreach(Shot shot; playerShots) {
+            shot.updateMovement(deltaTime);
+        }
     }
 
     override void updatePhysic(float deltaTime) {
         _currentDoll.updatePhysic(deltaTime);
         Entity.updatePhysic(deltaTime);
+
+        // Update collisons of player shots
+        foreach(Shot shot, uint index; playerShots) {            
+            // Handle collisions with enemies
+            foreach(Enemy enemy; enemies) {
+                shot.handleCollision(enemy);
+            }
+        }
     }
 
     override void update(float deltaTime) {
@@ -186,10 +199,6 @@ final class Player: Entity {
         _fallAnim.update(deltaTime);
         _stopAnim.update(deltaTime);
         _recoverAnim.update(deltaTime);
-
-        foreach(Shot shot; playerShots) {
-            shot.update(deltaTime);
-        }
 
         _currentDoll.playerPosition = _position;
         _currentDoll.movementSpeed  = _movementSpeed;

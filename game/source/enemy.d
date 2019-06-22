@@ -30,7 +30,7 @@ final class Enemy: Entity {
 	}
 
 	override void draw() {
-		writeln(_position);
+		// writeln(_position);
 		_currentAnim.draw(_position);
 	}
 
@@ -39,6 +39,6 @@ final class Enemy: Entity {
 	}
 
 	override void handleCollision(Shot shot) {
-        // @TODO
+        // writeln("Hit");
     }
 }

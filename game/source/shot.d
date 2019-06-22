@@ -36,7 +36,7 @@ class Shot {
         _glowSprite = fetch!Sprite("fx.glow");        
     }
 
-    void update(float deltaTime) {
+    void updateMovement(float deltaTime) {
         _position += _direction * deltaTime;
         _time += deltaTime;
         if(_time > _timeToLive) {
