@@ -191,6 +191,7 @@ final class Player: Entity {
         }
 
         _currentDoll.playerPosition = _position;
+        _currentDoll.movementSpeed  = _movementSpeed;
         _currentDoll.mousePosition  = mousePosition;
         _currentDoll.update(deltaTime);
     }
