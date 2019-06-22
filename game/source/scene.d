@@ -113,6 +113,9 @@ final class SceneGui: GuiElementCanvas {
             _camera.mousePosition = event.position;
             _player.mousePosition = event.position;
             break;
+        case MouseWheel:
+            _player.selectNextDoll(event.position.y > 0f);
+            break;
         default:
             break;
         }

@@ -40,11 +40,29 @@ final class Player: Entity {
         dolls = new DollArray();
 
         dolls.push(new Doll(_position));
-        _currentDoll = dolls[0];
+        _currentDoll = dolls[_dollIndex];
         _dollThread = new DollThread;
         _dollThread.doll = _currentDoll;
         _dollThread.player = this;
         _dollThread.init();
+    }
+
+    private {
+        Timer _dollSelectTimer;
+        int _dollIndex;
+    }
+    void selectNextDoll(bool forward) {
+        if(_dollSelectTimer.isRunning)
+            return;
+
+        _dollIndex = forward ? _dollIndex + 1 : _dollIndex - 1;
+        if(_dollIndex >= dolls.length)
+            _dollIndex = 0;
+        if(_dollIndex < 0)
+            _dollIndex = (cast(int)dolls.length) - 1;
+        _currentDoll = dolls[_dollIndex];
+        
+        _dollSelectTimer.start(.2f);
     }
 
     override void updateMovement(float deltaTime) {
@@ -201,6 +219,8 @@ final class Player: Entity {
     }
 
     override void update(float deltaTime) {
+        _dollSelectTimer.update(deltaTime);
+
         _dollThread.doll = _currentDoll;
         _dollThread.player = this;
         _dollThread.update(deltaTime);
