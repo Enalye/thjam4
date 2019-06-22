@@ -4,6 +4,10 @@
 		{
 			"name": "ThJam4",
 			"path": "../game/source"
+		},
+        {
+			"name": "Scripts",
+			"path": "../data/script"
 		}
 	]
 }

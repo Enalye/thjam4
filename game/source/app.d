@@ -27,8 +27,6 @@ void main() {
 
         //Loader
         onStartupLoad(&onLoadComplete);
-        
-        onSceneStart();
 		runApplication();
 	}
 	catch(Exception e) {
