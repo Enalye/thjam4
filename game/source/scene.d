@@ -14,6 +14,7 @@ import game.shot;
 import game.background;
 import game.particles;
 import game.coroutils;
+import game.hud;
 
 import std.stdio: writeln;
 
@@ -43,6 +44,10 @@ final class SceneGui: GuiElementCanvas {
         position(Vec2f.zero);
         size(screenSize);
         setAlign(GuiAlignX.Left, GuiAlignY.Top);
+
+        hud = new HudGui;
+        hud.size = size;
+        addRootGui(hud);
 
         _player = new Player;
         _camera = createCamera(canvas);

@@ -29,6 +29,9 @@ abstract class Entity {
 
         void movementSpeed(Vec2f movementSpeed) { _movementSpeed = movementSpeed; }
         Vec2f speed() { return _speed + _movementSpeed; }
+
+        int life() { return _life; }
+        int maxLife() { return _maxLife; }
     }
 
     void updatePhysic(float deltaTime) {
