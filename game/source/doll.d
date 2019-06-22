@@ -10,7 +10,7 @@ final class Doll: Entity {
 	private {
 		Sprite _sprite; // @TODO animations instead
 		float  _threadLength; // Max length from player
-		Vec2f  _oldPosition;
+		Vec2f  _target;
 	}
 
 	Vec2f mousePosition = Vec2f.zero;

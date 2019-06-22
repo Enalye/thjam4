@@ -29,7 +29,7 @@ final class SceneGui: GuiElementCanvas {
         Background _bg;
         GrEngine _vm;
 
-        IndexedArray!(Enemy, 100u) _enemies;
+        EnemyArray _enemies;
     }
 
     this() {
@@ -40,6 +40,9 @@ final class SceneGui: GuiElementCanvas {
         _player = new Player;
         _camera = createCamera(canvas);
         _camera.followEntity(_player);
+
+        _enemies = new EnemyArray();
+        _enemies.push(new Enemy("enemy2", Vec2f(250f, -250f)));
 
         _sparks = createSparks();
         _bg = new Background;
@@ -65,6 +68,10 @@ final class SceneGui: GuiElementCanvas {
         _player.updatePhysic(deltaTime);
         _player.update(deltaTime);
         _sparks.update(deltaTime);
+
+        foreach(Enemy enemy; _enemies) {
+            enemy.update(deltaTime);
+        }
 
         if(_vm.hasCoroutines) {
             _vm.process();
@@ -94,6 +101,11 @@ final class SceneGui: GuiElementCanvas {
         _bg.draw();
         _level.draw();
         _sparks.draw();
+
+        // @TODO review draw order
+        foreach(Enemy enemy; _enemies) {
+            enemy.draw();
+        }
         _player.draw();
         
         _modularCanvas.position = canvas.position;
