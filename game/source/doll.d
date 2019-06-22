@@ -38,11 +38,11 @@ final class Doll: Entity {
 		}
 		// Not enough thread length
 		else {
-			//writeln(playerToDoll);
 			_target = playerPosition + (playerToDoll * _threadLength);
 		}
 
-		_position = _position.lerp(_target, deltaTime * 5 / distanceToPlayer);
+		float speed = 10 * (distanceToPlayer / _threadLength);
+		_position = _position.lerp(_target, deltaTime * speed / distanceToPlayer);
 	}
 
 	// @TODO lerp it !
