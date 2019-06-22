@@ -64,6 +64,8 @@ abstract class Entity {
                 _canDoubleJump = true;
             }
         }
+
+        _position = _position.clamp(Vec2f(16f, -1500f), Vec2f(2486f, 200f));
     }
 
     abstract void updateMovement(float deltaTime);

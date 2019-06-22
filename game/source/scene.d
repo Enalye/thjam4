@@ -47,6 +47,7 @@ final class SceneGui: GuiElementCanvas {
         _player = new Player;
         _camera = createCamera(canvas);
         _camera.followEntity(_player);
+        _camera.clip = Vec4f(0f, -1500f, 2500f, 200f);
 
         enemies = new EnemyArray();
 
