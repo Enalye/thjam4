@@ -20,6 +20,7 @@ class Shot {
         bool isAlive() const { return _isAlive; }
         int damage() const { return _damage; }
 
+        Vec2f position() { return _position; }
         Vec2f position(Vec2f newPosition) { return _position = newPosition; }
         Vec2f direction(Vec2f newDirection) { return _direction = newDirection; }
         float timeToLive(float newTTL) { return _timeToLive = newTTL; }

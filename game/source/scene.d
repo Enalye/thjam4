@@ -62,6 +62,7 @@ final class SceneGui: GuiElementCanvas {
         _modularCanvas = new Canvas(screenSize);
         _modularCanvas.setColorMod(Color.white, Blend.ModularBlending);
 
+        playerShots = new ShotArray;
         enemyShots = new ShotArray;
 
         currentLevel = _level = fetch!Level("test");
@@ -69,8 +70,28 @@ final class SceneGui: GuiElementCanvas {
     }
     
     void updateShots(float deltaTime) {
-        foreach(Shot shot, uint index; enemyShots) {            
-            if(!shot.handleCollision(_player))
+        // Update collisons of player shots
+        foreach(Shot shot, uint index; playerShots) {            
+            // Update movement of player shots
+            shot.updateMovement(deltaTime);
+            // Handle collisions with enemies
+            if(_level.checkCollision(shot.position)) {
+                playerShots.markInternalForRemoval(index);
+                continue;
+            }
+            foreach(Enemy enemy; enemies) {
+                if(shot.handleCollision(enemy)) {
+                    playerShots.markInternalForRemoval(index);
+                    break;
+                }
+            }
+        }
+        playerShots.sweepMarkedData();
+
+        foreach(Shot shot, uint index; enemyShots) {
+            if(_level.checkCollision(shot.position))
+                enemyShots.markInternalForRemoval(index);
+            else if(shot.handleCollision(_player))
                 enemyShots.markInternalForRemoval(index);
         }
         enemyShots.sweepMarkedData();

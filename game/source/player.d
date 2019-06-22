@@ -40,7 +40,6 @@ final class Player: Entity {
         _speed = Vec2f.zero;
         _hasGravity = true;
 
-        playerShots = new ShotArray();
         dolls = new DollArray();
 
         dolls.push(new Doll(this, _position, Color.fromRGB(0xFF4500), DollType.SHOT)); // Red
@@ -220,23 +219,12 @@ final class Player: Entity {
         _shotTimer.update(deltaTime);
         _wasFalling = _isFalling;
 
-        // Update movement of player shots
-        foreach(Shot shot; playerShots) {
-            shot.updateMovement(deltaTime);
-        }
+        
     }
 
     override void updatePhysic(float deltaTime) {
         _currentDoll.updatePhysic(deltaTime);
         Entity.updatePhysic(deltaTime);
-
-        // Update collisons of player shots
-        foreach(Shot shot, uint index; playerShots) {            
-            // Handle collisions with enemies
-            foreach(Enemy enemy; enemies) {
-                shot.handleCollision(enemy);
-            }
-        }
     }
 
     override void update(float deltaTime) {

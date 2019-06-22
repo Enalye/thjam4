@@ -13,6 +13,20 @@ private struct Layer {
         tileset = fetch!Tileset("level");
     }
 
+    bool checkCollision(Vec2f pos) {
+        const auto size = tileWidth * tileHeight;
+        Vec2i coords = to!Vec2i(((pos - Vec2f.one * 16f) / 32f).round()) + Vec2i(0, tileHeight);
+        if(!coords.isBetween(Vec2i.zero, Vec2i(tileWidth, tileHeight)))
+            return false;
+        int id = coords.y * tileWidth + coords.x;
+        //Just to be sure
+        if(id < 0 || id >= size)
+            return false;
+        if(ids[id] == 0)
+            return false;
+        return true;
+    }
+
     bool checkCollisionY(ref float hitY, Vec2f pos, bool isRecursive = false) {
         const auto size = tileWidth * tileHeight;
         Vec2f origin = Vec2f(16f, -tileHeight * 32f + 16f);
@@ -82,6 +96,14 @@ final class Level {
             layer.load(layerNode);
             _layers ~= layer;
         }
+    }
+
+    bool checkCollision(Vec2f pos) {
+        foreach(ref layer; _layers) {
+            if(layer.checkCollision(pos))
+                return true;
+        }
+        return false;
     }
 
     bool checkCollisionY(ref float hitY, Vec2f pos) {
