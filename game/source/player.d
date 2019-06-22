@@ -172,6 +172,8 @@ final class Player: Entity {
 
         _shotTimer.update(deltaTime);
         _wasFalling = _isFalling;
+
+        _currentDoll.updatePhysic(deltaTime);
     }
 
     override void update(float deltaTime) {

@@ -23,11 +23,6 @@ final class Doll: Entity {
 	}
 
 	override void updateMovement(float deltaTime) {
-
-	}
-
-	// @TODO lerp it !
-	override void update(float deltaTime) {
         Vec2f playerToDoll = (mousePosition - playerPosition).normalized();
 
 		float distanceToPlayer = playerPosition.distance(_position);
@@ -35,13 +30,20 @@ final class Doll: Entity {
 
 		// Enough thread length (for old and new position)
 		if((distanceToPlayer < _threadLength) && (mouseToPlayer < _threadLength)) {
-			_position = mousePosition;
+			_target = mousePosition;
 		}
 		// Not enough thread length
 		else {
 			//writeln(playerToDoll);
-			_position = playerPosition + (playerToDoll * _threadLength);
+			_target = playerPosition + (playerToDoll * _threadLength);
 		}
+
+		_position = _position.lerp(_target, deltaTime * 5 / distanceToPlayer);
+	}
+
+	// @TODO lerp it !
+	override void update(float deltaTime) {
+
 	}
 
 	override void draw() {
