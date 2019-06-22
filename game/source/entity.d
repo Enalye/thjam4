@@ -26,6 +26,8 @@ abstract class Entity {
     @property {
         Vec2f position() { return _position; }
         void position(Vec2f position) { _position = position; }
+
+        void movementSpeed(Vec2f movementSpeed) { _movementSpeed = movementSpeed; }
         Vec2f speed() { return _speed + _movementSpeed; }
     }
 

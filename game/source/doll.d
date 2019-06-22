@@ -15,10 +15,6 @@ final class Doll: Entity {
 
     bool isLocked;
 
-    @property {
-        void movementSpeed(Vec2f movementSpeed) { _movementSpeed = movementSpeed; }
-    }
-
 	Vec2f mousePosition = Vec2f.zero;
 	Vec2f playerPosition = Vec2f.zero;
 

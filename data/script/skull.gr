@@ -1,17 +1,18 @@
-task move(int enemyIdx) {
+task moveSkull(int enemyIdx) {
     let baseX, baseY = getPosition(enemyIdx);
     let goesLeft = true;
-    let x = baseX;
-    let y = baseY;
 
     loop {
+        let x, y = getPosition(enemyIdx);
+        let movX = 0f;
+
     	if(goesLeft) {
-    		x = x - 1f;
+    		movX = -1f;
     	} else {
-    		x = x + 1f;
+    		movX = 1f;
     	}
 
-        setPosition(enemyIdx, x, y);
+        setMovementSpeed(enemyIdx, movX, 0f);
         yield;
 
         // Check enemy is still alive after the yield

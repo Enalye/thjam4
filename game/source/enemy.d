@@ -11,7 +11,7 @@ alias EnemyArray = IndexedArray!(Enemy, 100u);
 
 final class Enemy: Entity {
 	private {
-		Animation _currentAnim, _idleAnim;
+		Animation _currentAnim, _idleAnim, _deathAnim;
 		float _lastBarRatio = 1f, _lifeRatio = 1f;
 		Timer _deathTimer;
 	}
@@ -20,6 +20,7 @@ final class Enemy: Entity {
 		_index    = index;
 		_position = position;
 		_idleAnim = new Animation(name ~ ".idle");
+		_deathAnim = new Animation(name ~ ".death");
 		_idleAnim.start(.5f, TimeMode.Loop);
 		_currentAnim = _idleAnim;
 	}
@@ -29,9 +30,18 @@ final class Enemy: Entity {
 	}
 
 	override void updateMovement(float deltaTime) {
+		// Flip if going left
+		if(_movementSpeed.x < 0) {
+			_idleAnim.flip = Flip.HorizontalFlip;
+		} else {
+			_idleAnim.flip = Flip.NoFlip;
+		}
+
 		// Logic mainly implemented in coroutines
 		if(_life == 0) {
-			_deathTimer.start(0.5f);
+			_deathTimer.start(.5f);
+			_deathAnim.start(.5f, TimeMode.Once);
+            _currentAnim = _deathAnim;
 		}
 	}
 

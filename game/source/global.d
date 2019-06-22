@@ -21,7 +21,7 @@ EnemyArray enemies;
 ShotArray enemyShots;
 
 void createPlayerShot(Vec2f pos, Vec2f scale, int damage, Color color, Vec2f direction, float speed, float timeToLive) {
-    Shot shot = new Shot("doll_1", color, scale);
+    Shot shot = new Shot("shot", color, scale);
 
     Vec2f normalizedDirection = direction.normalized;
 

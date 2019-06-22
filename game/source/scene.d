@@ -79,6 +79,7 @@ final class SceneGui: GuiElementCanvas {
         _sparks.update(deltaTime);
 
         foreach(Enemy enemy, uint index; enemies) {
+            enemy.updatePhysic(deltaTime);
             enemy.update(deltaTime);
 
             if(!enemy.isAlive) {

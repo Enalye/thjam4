@@ -1,5 +1,5 @@
 import "data/script/rainbow.gr"
-import "data/script/fairy.gr"
+import "data/script/skull.gr"
 
 func wait(int n) {
 	loop(n) {
@@ -18,8 +18,8 @@ main {
 		float x = posx[enemyIdx] as float;
 		float y = posy[enemyIdx] as float;
 
-		spawnEnemy(enemyIdx, "enemy2", x, y);
-		move(enemyIdx);
+		spawnEnemy(enemyIdx, "enemy1", x, y);
+		moveSkull(enemyIdx);
 		enemyIdx++;
 	}
 }
