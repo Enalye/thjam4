@@ -1,7 +1,10 @@
 module game.global;
 
 import atelier;
-import game.shot, game.doll;
+import game.shot, game.doll, game.level;
+
+// Owned by the scene
+Level currentLevel;
 
 // Owned by the player instance
 ShotArray playerShots;

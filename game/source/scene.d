@@ -4,6 +4,7 @@ import std.conv: to;
 import atelier;
 import grimoire;
 import game.player, game.camera, game.entity, game.level, game.enemy, game.background, game.particles, game.coroutils;
+import game.global;
 
 import std.stdio: writeln;
 
@@ -50,7 +51,7 @@ final class SceneGui: GuiElementCanvas {
         _modularCanvas = new Canvas(screenSize);
         _modularCanvas.setColorMod(Color.white, Blend.ModularBlending);
 
-        _level = fetch!Level("test");
+        currentLevel = _level = fetch!Level("test");
         _vm    = new GrEngine;
 
         addPrimitives();

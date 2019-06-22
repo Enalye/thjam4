@@ -1,7 +1,7 @@
 module game.entity;
 
 import atelier;
-import game.shot;
+import game.shot, game.global;
 
 abstract class Entity {
     protected {
@@ -34,8 +34,23 @@ abstract class Entity {
         }
         _speed += _acceleration * deltaTime;
         _position += (_speed + _movementSpeed) * deltaTime;
-
+        
+        
+        float hitY = _position.y + _size.y / 2f;
+        if(currentLevel.checkCollisionY(hitY, Vec2f(_position.x, _position.y + _size.y / 2f))) {
+            if((_isFalling && _speed.y > 0f) || !_isFalling) {
+                _position.y = hitY - _size.y / 2f - 10f;
+                _isFalling = false;
+                _speed.y = 0f;
+                _canDoubleJump = true;
+            }
+        }
+        else {
+            _isFalling = true;
+        }
+        
         if(_isFalling) {
+            //Default
             if(position.y > (- _size.y / 2f)) {
                 _position.y = - _size.y / 2f;
                 _isFalling = false;
