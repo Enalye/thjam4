@@ -32,6 +32,7 @@ final class Player: Entity {
         _size = to!Vec2f(_idleAnim.tileSize);
         _position = Vec2f(32f, -_size.y / 2f);
         _speed = Vec2f.zero;
+        _hasGravity = true;
 
         playerShots = new ShotArray();
         dolls = new DollArray();

@@ -12,7 +12,7 @@ abstract class Entity {
             _movementSpeed = Vec2f.zero,
             _acceleration = Vec2f.zero;
 
-        bool _isFalling, _canDoubleJump;
+        bool _isFalling, _canDoubleJump, _hasGravity;
 
         int _index;
 
@@ -24,6 +24,7 @@ abstract class Entity {
 
     @property {
         Vec2f position() { return _position; }
+        void position(Vec2f position) { _position = position; }
         Vec2f speed() { return _speed + _movementSpeed; }
     }
 
@@ -38,18 +39,19 @@ abstract class Entity {
         _speed += _acceleration * deltaTime;
         _position += (_speed + _movementSpeed) * deltaTime;
         
-        
-        float hitY = _position.y + _size.y / 2f;
-        if(currentLevel.checkCollisionY(hitY, Vec2f(_position.x, _position.y + _size.y / 2f))) {
-            if((_isFalling && _speed.y > 0f) || !_isFalling) {
-                _position.y = hitY - _size.y / 2f - 10f;
-                _isFalling = false;
-                _speed.y = 0f;
-                _canDoubleJump = true;
+        if(_hasGravity) {
+            float hitY = _position.y + _size.y / 2f;
+            if(currentLevel.checkCollisionY(hitY, Vec2f(_position.x, _position.y + _size.y / 2f))) {
+                if((_isFalling && _speed.y > 0f) || !_isFalling) {
+                    _position.y = hitY - _size.y / 2f - 10f;
+                    _isFalling = false;
+                    _speed.y = 0f;
+                    _canDoubleJump = true;
+                }
             }
-        }
-        else {
-            _isFalling = true;
+            else {
+                _isFalling = true;
+            }
         }
         
         if(_isFalling) {

@@ -4,5 +4,11 @@ import "data/script/fairy.gr"
 main {
 	playerShots();
 
-	let x, y = 0f;
+	let enemyIdx = 0;
+	spawnEnemy(enemyIdx, "enemy2", 250f, -250f);
+
+	loop {
+		move(enemyIdx);
+		yield;
+	}
 }
