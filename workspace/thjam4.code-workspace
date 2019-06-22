@@ -4,6 +4,9 @@
             "path": "../game"
         },
         {
+            "path": "../data/script"
+        },
+        {
             "path": "../atelier"
         },
         {
