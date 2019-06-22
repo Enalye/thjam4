@@ -1,6 +1,7 @@
 module game.coroutils;
 
 import std.math;
+import std.stdio: writeln;
 import atelier;
 import grimoire;
 import game.global, game.shot;

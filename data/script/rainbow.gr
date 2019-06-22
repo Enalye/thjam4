@@ -4,7 +4,6 @@ func rainbow(float frequency) {
     	r = psin(frequency * i);
    		g = psin(frequency * i + 2f);
    		b = psin(frequency * i + 4f);
-   		//print([r, g, b]);
    		setColor(r, g, b);
    		i++;
     	yield;

@@ -42,7 +42,7 @@ final class SceneGui: GuiElementCanvas {
         _vm    = new GrEngine;
 
         addPrimitives();
-        auto bytecode = grCompileFile("data/script/fib.gr");
+        auto bytecode = grCompileFile("data/script/rainbow.gr");
         _vm.load(bytecode);
         _vm.spawn();
     }
