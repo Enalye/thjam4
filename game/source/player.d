@@ -134,9 +134,12 @@ final class Player: Entity {
         if(!_trailTimer.isRunning) {
             final class TrailParticle: Spark {
                 override void update(float deltaTime) {
+                    float t = easeInOutSine(time / timeToLive);
                     sprite.color = Color(
-                        .8f, .8f, 1f,
-                        lerp(.8f, 0f, easeInOutSine(time / timeToLive)));
+                        lerp(.8f, .0f, t),
+                        lerp(.8f, .5f, t),
+                        lerp(1f, .8f, t),
+                        lerp(.8f, 0f, t));
                 }
             }
 
@@ -145,6 +148,25 @@ final class Player: Entity {
             spark.position = _position;
             spark.timeToLive = 2f;
             spawnSpark(spark);
+
+            final class OutlineParticle: Spark {
+                Player player;
+
+                override void update(float deltaTime) {
+                    position = player.position + Vec2f(0f, lerp(0f, 20f, time / timeToLive));
+                    sprite = player._currentAnim.getCurrentSprite();
+                    sprite.color = Color(.15f, .3f, .6f);
+                    sprite.scale = Vec2f.one * 1.25f * lerp(1f, .3f, time / timeToLive);
+                    sprite.blend = Blend.AdditiveBlending;
+                }
+            }
+
+            auto outline = new OutlineParticle;
+            outline.player = this;
+            outline.sprite = _currentAnim.getCurrentSprite();
+            outline.position = _position;
+            outline.timeToLive = 2f;
+            spawnSpark(outline);
             _trailTimer.start(.1f);
         }
 

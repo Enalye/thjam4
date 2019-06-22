@@ -78,7 +78,7 @@ final package class Camera {
 			_position = _translationOrigin.lerp(_translationDestination, easeOutSine(_translationTimer.time));
 		}
         else if(_isFollowingEntity) {
-            const Vec2f targetPosition = _followedEntity.position.lerp(mousePosition, .2f);
+            const Vec2f targetPosition = (_followedEntity.position - Vec2f(0f, 75f)).lerp(mousePosition, .2f);
             _speed = _followedEntity.speed + (targetPosition - _position) * deltaTime * 0.3f;
             mousePosition += _speed;
         }

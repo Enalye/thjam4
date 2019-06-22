@@ -3,7 +3,7 @@ module game.scene;
 import std.conv: to;
 import atelier;
 import grimoire;
-import game.player, game.camera, game.entity, game.level, game.enemy, game.particles, game.coroutils;
+import game.player, game.camera, game.entity, game.level, game.enemy, game.background, game.particles, game.coroutils;
 
 import std.stdio: writeln;
 
@@ -26,6 +26,7 @@ final class SceneGui: GuiElementCanvas {
         Camera _camera;
         Level _level;
         Sparks _sparks;
+        Background _bg;
         GrEngine _vm;
 
         IndexedArray!(Enemy, 100u) _enemies;
@@ -41,6 +42,7 @@ final class SceneGui: GuiElementCanvas {
         _camera.followEntity(_player);
 
         _sparks = createSparks();
+        _bg = new Background;
 
         _modularCanvas = new Canvas(screenSize);
         _modularCanvas.setColorMod(Color.white, Blend.ModularBlending);
@@ -87,7 +89,9 @@ final class SceneGui: GuiElementCanvas {
     }
 
     override void draw() {
+        canvas.clearColor = Color(.38f, .41f, .31f);
         auto position = getCameraPosition();
+        _bg.draw();
         _level.draw();
         _sparks.draw();
         _player.draw();
@@ -97,10 +101,11 @@ final class SceneGui: GuiElementCanvas {
         pushCanvas(_modularCanvas, true);
         drawFilledRect(position - screenSize / 2f, screenSize, Color.white * .2f);
         auto glow = fetch!Sprite("fx.glow");
-        glow.size = Vec2f.one * 600f;
+        glow.size = Vec2f.one * 800f;
         glow.draw(_player.position);
         popCanvas();
         
-        drawFilledRect(Vec2f(position.x - screenWidth / 2f, 0f), Vec2f(screenWidth, 5f), Color.white);
+        //Debug ground
+        //drawFilledRect(Vec2f(position.x - screenWidth / 2f, 0f), Vec2f(screenWidth, 5f), Color.white);
     }
 }
