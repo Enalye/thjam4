@@ -19,6 +19,7 @@ final class SceneGui: GuiElementCanvas {
         Level _level;
         Sparks _sparks;
         GrEngine _vm;
+        Canvas _additiveCanvas;
 
         IndexedArray!(Enemy, 100u) _enemies;
     }
@@ -33,6 +34,9 @@ final class SceneGui: GuiElementCanvas {
         _camera.followEntity(_player);
 
         _sparks = createSparks();
+
+        _additiveCanvas = new Canvas(screenSize);
+        _additiveCanvas.setColorMod(Color.white, Blend.AdditiveBlending);
 
         _level = fetch!Level("test");
         _vm    = new GrEngine;
@@ -80,6 +84,10 @@ final class SceneGui: GuiElementCanvas {
         _level.draw();
         _sparks.draw();
         _player.draw();
+        pushCanvas(_additiveCanvas, true);
+    
+        popCanvas();
+        _additiveCanvas.draw(position);
         drawFilledRect(Vec2f(position.x - screenWidth / 2f, 0f), Vec2f(screenWidth, 5f), Color.white);
     }
 }

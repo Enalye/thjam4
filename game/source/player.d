@@ -116,6 +116,8 @@ final class Player: Entity {
             _currentAnim = _idleAnim;
         }
 
+        mousePosition += speed();
+
         //Shoot
         if(isButtonDown(SDL_BUTTON_LEFT)) {
             fire();
