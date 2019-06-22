@@ -54,14 +54,17 @@ final class Doll: Entity {
             else {
                 _target = playerPosition + (playerToDoll * _threadLength);
             }
-            
-            _acceleration = (_target - _position).normalized * rlerp(0f, 200f, _target.distance(_position)) * 2f;
+
+            float distanceTarget = _target.distance(_position);
+            if(!isNaN(distanceTarget)) {
+                float rlerpValue = 0.8f * _threadLength;
+                _acceleration = (_target - _position).normalized * rlerp(0f, rlerpValue, _target.distance(_position)) * 2f;
+            }
         }
 
         _speed *= .9f * deltaTime;		
 	}
 
-	// @TODO lerp it !
 	override void update(float deltaTime) {
 
 	}

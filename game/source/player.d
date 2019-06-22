@@ -40,7 +40,7 @@ final class Player: Entity {
         dolls = new DollArray();
 
         dolls.push(new Doll(_position, Color.fromRGB(0xFF4500), DollType.SHOT));
-        dolls.push(new Doll(_position, Color.fromRGB(0xFFA500), DollType.LASER, 50f));
+        dolls.push(new Doll(_position, Color.fromRGB(0xFFA500), DollType.LASER));
         dolls.push(new Doll(_position, Color.fromRGB(0xFFFF33), DollType.EXPLOSIVE));  
         dolls.push(new Doll(_position, Color.fromRGB(0x32CD32), DollType.LANCE));
         dolls.push(new Doll(_position, Color.fromRGB(0x00BFFF), DollType.TELEPORT));
