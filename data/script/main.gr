@@ -1,0 +1,8 @@
+import "data/script/rainbow.gr"
+import "data/script/fairy.gr"
+
+main {
+	playerShots();
+
+	let x, y = 0f;
+}

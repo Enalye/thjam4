@@ -1,0 +1,8 @@
+task move(float x, float y) {
+    let baseX = x;
+    let baseY = y;
+    let alive = true;
+    loop {
+        yield; 
+    }
+}

@@ -1,11 +1,18 @@
 module game.global;
 
 import atelier;
-import game.shot, game.doll;
+import grimoire;
+import game.enemy, game.shot, game.doll;
+
+// Virtual machine
+GrEngine vm;
 
 // Owned by the player instance
 ShotArray playerShots;
 DollArray dolls;
+
+// Enemies
+EnemyArray enemies;
 
 // Owned by the enemy class
 ShotArray enemyShots;

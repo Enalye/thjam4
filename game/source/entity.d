@@ -1,6 +1,7 @@
 module game.entity;
 
 import atelier;
+import grimoire;
 import game.shot;
 
 abstract class Entity {
@@ -12,6 +13,8 @@ abstract class Entity {
             _acceleration = Vec2f.zero;
 
         bool _isFalling, _canDoubleJump;
+
+        int _index;
 
         enum Direction {
             Left, Right
@@ -50,4 +53,17 @@ abstract class Entity {
     abstract void draw();
     abstract void fire();
     abstract void handleCollision(Shot shot);
+
+    // APIs to handle behaviour of entities in VM
+    /*public void getPosition(GrCall call) {
+        call.setFloat(_position.x);
+        call.setFloat(_position.y);
+    }
+
+    public void setPosition(GrCall call) {
+        float x = call.getFloat("x");
+        float y = call.getFloat("y");
+
+        _position = Vec2f(x, y);
+    }*/
 }
