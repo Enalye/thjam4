@@ -64,13 +64,17 @@ final class Player: Entity {
             return;
 
         _dollIndex = forward ? _dollIndex + 1 : _dollIndex - 1;
-        if(_dollIndex >= dolls.length)
+        if(_dollIndex >= cast(int)dolls.length) 
             _dollIndex = 0;
         if(_dollIndex < 0)
             _dollIndex = (cast(int)dolls.length) - 1;
-        _currentDoll = dolls[_dollIndex];
         
-        _dollSelectTimer.start(.2f);
+        _currentDoll = dolls[_dollIndex];
+        _currentDoll.position = _position;
+        _dollThread.doll = _currentDoll;
+        _dollThread.init();
+        
+        _dollSelectTimer.start(.5f);
     }
 
     override void updateMovement(float deltaTime) {
