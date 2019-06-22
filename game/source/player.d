@@ -30,7 +30,7 @@ final class Player: Entity {
         _currentAnim = _idleAnim;
 
         _size = to!Vec2f(_idleAnim.tileSize);
-        _position = Vec2f(0f, -_size.y / 2f);
+        _position = Vec2f(32f, -_size.y / 2f);
         _speed = Vec2f.zero;
 
         playerShots = new ShotArray();

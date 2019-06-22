@@ -46,7 +46,7 @@ final class SceneGui: GuiElementCanvas {
         _modularCanvas = new Canvas(screenSize);
         _modularCanvas.setColorMod(Color.white, Blend.ModularBlending);
 
-        _level = fetch!Level("test");
+        currentLevel = _level = fetch!Level("test");
         loadScripts();
     }
 

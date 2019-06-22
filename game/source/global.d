@@ -2,7 +2,10 @@ module game.global;
 
 import atelier;
 import grimoire;
-import game.enemy, game.shot, game.doll;
+import game.enemy, game.shot, game.doll, game.level;
+
+// Owned by the scene
+Level currentLevel;
 
 // Virtual machine
 GrEngine vm;
