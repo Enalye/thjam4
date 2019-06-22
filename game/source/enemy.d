@@ -13,7 +13,8 @@ final class Enemy: Entity {
 		Animation _currentAnim, _idleAnim;
 	}
 
-	this(string name, Vec2f position) {
+	this(int index, string name, Vec2f position) {
+		_index    = index;
 		_position = position;
 		_idleAnim = new Animation(name ~ ".idle");
 		_idleAnim.start(.5f, TimeMode.Loop);
@@ -29,6 +30,7 @@ final class Enemy: Entity {
 	}
 
 	override void draw() {
+		// writeln(_position);
 		_currentAnim.draw(_position);
 	}
 
@@ -37,6 +39,6 @@ final class Enemy: Entity {
 	}
 
 	override void handleCollision(Shot shot) {
-        // @TODO
+        // writeln("Hit");
     }
 }

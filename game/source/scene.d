@@ -3,8 +3,7 @@ module game.scene;
 import std.conv: to;
 import atelier;
 import grimoire;
-import game.player, game.camera, game.entity, game.level, game.enemy, game.background, game.particles, game.coroutils;
-import game.global;
+import game.global, game.player, game.camera, game.entity, game.level, game.enemy, game.background, game.particles, game.coroutils;
 
 import std.stdio: writeln;
 
@@ -28,9 +27,6 @@ final class SceneGui: GuiElementCanvas {
         Level _level;
         Sparks _sparks;
         Background _bg;
-        GrEngine _vm;
-
-        EnemyArray _enemies;
     }
 
     this() {
@@ -42,8 +38,7 @@ final class SceneGui: GuiElementCanvas {
         _camera = createCamera(canvas);
         _camera.followEntity(_player);
 
-        _enemies = new EnemyArray();
-        _enemies.push(new Enemy("enemy2", Vec2f(250f, -250f)));
+        enemies = new EnemyArray();
 
         _sparks = createSparks();
         _bg = new Background;
@@ -52,12 +47,14 @@ final class SceneGui: GuiElementCanvas {
         _modularCanvas.setColorMod(Color.white, Blend.ModularBlending);
 
         currentLevel = _level = fetch!Level("test");
-        _vm    = new GrEngine;
+        loadScripts();
+    }
 
+    void loadScripts() {
+        vm = new GrEngine;
         addPrimitives();
-        auto bytecode = grCompileFile("data/script/rainbow.gr");
-        _vm.load(bytecode);
-        _vm.spawn();
+        vm.load(grCompileFile("data/script/main.gr"));
+        vm.spawn();
     }
 
     /*~this() {
@@ -70,16 +67,16 @@ final class SceneGui: GuiElementCanvas {
         _player.update(deltaTime);
         _sparks.update(deltaTime);
 
-        foreach(Enemy enemy; _enemies) {
+        foreach(Enemy enemy; enemies) {
             enemy.update(deltaTime);
         }
 
-        if(_vm.hasCoroutines) {
-            _vm.process();
+        if(vm.hasCoroutines) {
+            vm.process();
         }
 
-        if(_vm.isPanicking) {
-            writeln("Unhandled Exception: " ~ to!string(_vm.panicMessage));
+        if(vm.isPanicking) {
+            writeln("Unhandled Exception: " ~ to!string(vm.panicMessage));
         }
     }
 
@@ -104,7 +101,7 @@ final class SceneGui: GuiElementCanvas {
         _sparks.draw();
 
         // @TODO review draw order
-        foreach(Enemy enemy; _enemies) {
+        foreach(Enemy enemy; enemies) {
             enemy.draw();
         }
         _player.draw();

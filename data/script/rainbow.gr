@@ -10,9 +10,9 @@ task rainbow(float frequency) {
     }
 }
 
-main {
+task playerShots() {
+    
     let frequency = .3;
     let steps     = 32;
-
     rainbow(frequency);
 }
