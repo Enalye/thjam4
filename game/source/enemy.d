@@ -82,9 +82,7 @@ final class Enemy: Entity {
 
 	}
 
-	override void handleCollision(Shot shot) {
-		if(shot.isAlive) {
-        	_life = max(0, _life - shot.damage);
-        }
+	override void handleCollision(int damage) {
+        _life = max(0, _life - damage);
     }
 }

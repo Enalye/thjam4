@@ -84,7 +84,7 @@ final class Doll: Entity {
 	}
 
 
-    override void handleCollision(Shot shot) {
+    override void handleCollision(int damage) {
         // @TODO
     }
 }

@@ -62,8 +62,24 @@ final class SceneGui: GuiElementCanvas {
         _modularCanvas = new Canvas(screenSize);
         _modularCanvas.setColorMod(Color.white, Blend.ModularBlending);
 
+        enemyShots = new ShotArray;
+
         currentLevel = _level = fetch!Level("test");
         loadScripts();
+    }
+    
+    void updateShots(float deltaTime) {
+        foreach(Shot shot, uint index; enemyShots) {            
+            if(!shot.handleCollision(_player))
+                enemyShots.markInternalForRemoval(index);
+        }
+        enemyShots.sweepMarkedData();
+
+        foreach(Enemy entity; enemies) {
+            if(entity.position.distance(_player.position) < 40f) {
+                _player.handleCollision(1);
+            }
+        }
     }
 
     void loadScripts() {
@@ -78,6 +94,7 @@ final class SceneGui: GuiElementCanvas {
     }*/
 
     override void update(float deltaTime) {
+        updateShots(deltaTime);
         _camera.update(deltaTime);
         _player.updatePhysic(deltaTime);
         _player.update(deltaTime);
