@@ -4,7 +4,7 @@ import std.conv: to;
 import std.stdio: writeln;
 import atelier;
 import game.entity, game.particles, game.shot, game.global, game.doll, game.scene, game.enemy;
-import game.dollthread;
+import game.dollthread, game.camera;
 
 import derelict.sdl2.sdl;
 
@@ -298,6 +298,7 @@ final class Player: Entity {
             _speed.y = -5f;
             break;
         }
+        shakeCamera(Vec2f(25f, 15f), 1f);
         _iframesTimer.start(.2f);
     }
 }
