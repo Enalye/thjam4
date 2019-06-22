@@ -74,13 +74,29 @@ final class Doll: Entity {
 	}
 
 	override void fire() {
-        createPlayerShot(_position,
-                Vec2f.one,
-                1,
-                Color.red,
-                mousePosition - _position,
-                10f,
-                5 * 60f);
+        final switch(_type) with(DollType) { 
+        case DollType.SHOT:
+            createPlayerShot(_position,
+                    Vec2f.one,
+                    1,
+                    Color.red,
+                    mousePosition - _position,
+                    10f,
+                    5 * 60f);
+            break;
+        case DollType.LASER:
+            break;
+        case DollType.EXPLOSIVE:
+            break;
+        case DollType.LANCE:
+            break;
+        case DollType.TELEPORT:
+            break;
+        case DollType.BOOMERANG:
+            break;
+        case DollType.SHIELD:
+            break;
+        }
 	}
 
 

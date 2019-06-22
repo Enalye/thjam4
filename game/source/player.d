@@ -43,7 +43,7 @@ final class Player: Entity {
         dolls.push(new Doll(_position, Color.fromRGB(0xFFA500), DollType.LASER));
         dolls.push(new Doll(_position, Color.fromRGB(0xFFFF33), DollType.EXPLOSIVE));  
         dolls.push(new Doll(_position, Color.fromRGB(0x32CD32), DollType.LANCE));
-        dolls.push(new Doll(_position, Color.fromRGB(0x00BFFF), DollType.TELEPORT));
+        dolls.push(new Doll(_position, Color.fromRGB(0x00BFFF), DollType.TELEPORT, 750f));
         dolls.push(new Doll(_position, Color.fromRGB(0x4169E1), DollType.BOOMERANG));
         dolls.push(new Doll(_position, Color.fromRGB(0xBA55D3), DollType.SHIELD));
 
