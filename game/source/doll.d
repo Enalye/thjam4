@@ -4,7 +4,7 @@ import atelier;
 import std.stdio: writeln;
 import game.entity, game.shot, game.global;
 
-alias DollArray = IndexedArray!(Doll, 7);
+alias DollArray = IndexedArray!(Doll, 8);
 
 final class Doll: Entity {
 	private {

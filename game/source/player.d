@@ -39,8 +39,15 @@ final class Player: Entity {
         playerShots = new ShotArray();
         dolls = new DollArray();
 
-        dolls.push(new Doll(_position, Color.red));
-        dolls.push(new Doll(_position, Color(255f, 165f, 0f)));
+        dolls.push(new Doll(_position, Color.fromRGB(0xFF4500)));
+        dolls.push(new Doll(_position, Color.fromRGB(0xFFA500)));
+        dolls.push(new Doll(_position, Color.fromRGB(0xFFFF33)));  
+        dolls.push(new Doll(_position, Color.fromRGB(0x32CD32)));
+        dolls.push(new Doll(_position, Color.fromRGB(0x00BFFF)));
+        dolls.push(new Doll(_position, Color.fromRGB(0x4169E1)));
+        dolls.push(new Doll(_position, Color.fromRGB(0xBA55D3)));
+
+
         _currentDoll = dolls[_dollIndex];
         _dollThread = new DollThread;
         _dollThread.doll = _currentDoll;
@@ -222,7 +229,7 @@ final class Player: Entity {
     override void update(float deltaTime) {
         _dollSelectTimer.update(deltaTime);
 
-        _dollThread.doll = _currentDoll;
+        _dollThread.doll   = _currentDoll;
         _dollThread.player = this;
         _dollThread.update(deltaTime);
 
