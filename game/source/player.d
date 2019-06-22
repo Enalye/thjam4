@@ -39,13 +39,13 @@ final class Player: Entity {
         playerShots = new ShotArray();
         dolls = new DollArray();
 
-        dolls.push(new Doll(_position, Color.fromRGB(0xFF4500), DollType.SHOT));
-        dolls.push(new Doll(_position, Color.fromRGB(0xFFA500), DollType.LASER));
-        dolls.push(new Doll(_position, Color.fromRGB(0xFFFF33), DollType.EXPLOSIVE));  
-        dolls.push(new Doll(_position, Color.fromRGB(0x32CD32), DollType.LANCE));
-        dolls.push(new Doll(_position, Color.fromRGB(0x00BFFF), DollType.TELEPORT));
-        dolls.push(new Doll(_position, Color.fromRGB(0x4169E1), DollType.BOOMERANG));
-        dolls.push(new Doll(_position, Color.fromRGB(0xBA55D3), DollType.SHIELD));
+        dolls.push(new Doll(this, _position, Color.fromRGB(0xFF4500), DollType.SHOT)); // Red
+        dolls.push(new Doll(this, _position, Color.fromRGB(0xFFA500), DollType.LASER)); // Orange
+        dolls.push(new Doll(this, _position, Color.fromRGB(0xFFFF33), DollType.EXPLOSIVE)); // Yellow
+        dolls.push(new Doll(this, _position, Color.fromRGB(0x32CD32), DollType.LANCE)); // Green
+        dolls.push(new Doll(this, _position, Color.fromRGB(0x00BFFF), DollType.TELEPORT, 750f)); // Blue
+        dolls.push(new Doll(this, _position, Color.fromRGB(0x4169E1), DollType.BOOMERANG));
+        dolls.push(new Doll(this, _position, Color.fromRGB(0xBA55D3), DollType.SHIELD));
 
 
         _currentDoll = dolls[_dollIndex];
