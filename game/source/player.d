@@ -129,6 +129,7 @@ final class Player: Entity {
         if(isButtonDown(SDL_BUTTON_LEFT)) {
             fire();
         }
+        _currentDoll.isLocked = isButtonDown(SDL_BUTTON_RIGHT);
 
         //Castlevania trail effect
         _trailTimer.update(deltaTime);
@@ -201,7 +202,10 @@ final class Player: Entity {
         _recoverAnim.update(deltaTime);
 
         _currentDoll.playerPosition = _position;
-        _currentDoll.movementSpeed  = _movementSpeed;
+        if(_currentDoll.isLocked)
+            _currentDoll.movementSpeed = Vec2f.zero;
+        else
+            _currentDoll.movementSpeed = _movementSpeed;
         _currentDoll.mousePosition  = mousePosition;
         _currentDoll.update(deltaTime);
     }

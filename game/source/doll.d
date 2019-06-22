@@ -13,6 +13,8 @@ final class Doll: Entity {
 		Vec2f  _target;
 	}
 
+    bool isLocked;
+
     @property {
         void movementSpeed(Vec2f movementSpeed) { _movementSpeed = movementSpeed; }
     }
@@ -27,22 +29,26 @@ final class Doll: Entity {
 	}
 
 	override void updateMovement(float deltaTime) {
-        Vec2f playerToDoll = (mousePosition - playerPosition).normalized();
+        if(!isLocked) {
+            Vec2f destination = mousePosition;
 
-		float distanceToPlayer = playerPosition.distance(_position);
-		float mouseToPlayer    = playerPosition.distance(mousePosition);
+            Vec2f playerToDoll = (destination - playerPosition).normalized();
 
-		// Enough thread length (for old and new position)
-		if((distanceToPlayer < _threadLength) && (mouseToPlayer < _threadLength)) {
-			_target = mousePosition;
-		}
-		// Not enough thread length
-		else {
-			_target = playerPosition + (playerToDoll * _threadLength);
-		}
+            float distanceToPlayer = playerPosition.distance(_position);
+            float mouseToPlayer    = playerPosition.distance(destination);
 
-		float speed = 10 * (distanceToPlayer / _threadLength);
-		_position = _position.lerp(_target, deltaTime * speed / distanceToPlayer);
+            // Enough thread length (for old and new position)
+            if((distanceToPlayer < _threadLength) && (mouseToPlayer < _threadLength)) {
+                _target = destination;
+            }
+            // Not enough thread length
+            else {
+                _target = playerPosition + (playerToDoll * _threadLength);
+            }
+            _acceleration = (_target - _position).normalized * rlerp(0f, 200f, _target.distance(_position)) * 2f;
+        }
+
+        _speed *= .9f * deltaTime;		
 	}
 
 	// @TODO lerp it !
