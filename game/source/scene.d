@@ -3,7 +3,7 @@ module game.scene;
 import std.conv: to;
 import atelier;
 import grimoire;
-import game.player, game.camera, game.entity, game.level, game.enemy, game.particles;
+import game.player, game.camera, game.entity, game.level, game.enemy, game.particles, game.coroutils;
 
 import std.stdio: writeln;
 
@@ -36,6 +36,11 @@ final class SceneGui: GuiElementCanvas {
 
         _level = fetch!Level("test");
         _vm    = new GrEngine;
+
+        addPrimitives();
+        auto bytecode = grCompileFile("data/script/fib.gr");
+        _vm.load(bytecode);
+        _vm.spawn();
     }
 
     /*~this() {
