@@ -1,19 +1,25 @@
 task move(int enemyIdx) {
     let baseX, baseY = getPosition(enemyIdx);
+    let goesLeft = true;
     let x = baseX;
     let y = baseY;
-    let goesLeft = true;
 
     loop {
     	if(goesLeft) {
     		x = x - 1f;
+    	} else {
+    		x = x + 1f;
     	}
 
         setPosition(enemyIdx, x, y);
         yield;
 
-        if(x < (baseX - 50f)) {
+        if(goesLeft and (x < (baseX - 100f))) {
     		goesLeft = false;
+    	}
+
+    	if(!goesLeft and (x > (baseX + 100f))) {
+    		goesLeft = true;
     	}
     }
 }

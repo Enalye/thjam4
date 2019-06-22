@@ -90,9 +90,9 @@ final class Player: Entity {
             _acceleration.y += -7f;
         }
 
-        //Animation selection
+        // Animation selection
 
-        //Recover phase
+        // Recover phase
         if(_recoverAnim.isRunning) {
             _currentAnim = _recoverAnim;
         }
@@ -209,9 +209,6 @@ final class Player: Entity {
     override void draw() {
         _currentAnim.draw(_position);
         _currentDoll.draw();
-        foreach(Shot shot; playerShots) {
-            shot.draw();
-        }
     }
 
     override void fire() {

@@ -3,7 +3,17 @@ module game.scene;
 import std.conv: to;
 import atelier;
 import grimoire;
-import game.global, game.player, game.camera, game.entity, game.level, game.enemy, game.background, game.particles, game.coroutils;
+
+import game.global;
+import game.camera;
+import game.level;
+import game.entity;
+import game.player;
+import game.enemy;
+import game.shot;
+import game.background;
+import game.particles;
+import game.coroutils;
 
 import std.stdio: writeln;
 
@@ -71,6 +81,12 @@ final class SceneGui: GuiElementCanvas {
             enemy.update(deltaTime);
         }
 
+        foreach(Shot shot, uint index; playerShots) {
+            if(!shot.isAlive) {
+                playerShots.markInternalForRemoval(index);
+            }
+        }
+
         if(vm.hasCoroutines) {
             vm.process();
         }
@@ -78,6 +94,8 @@ final class SceneGui: GuiElementCanvas {
         if(vm.isPanicking) {
             writeln("Unhandled Exception: " ~ to!string(vm.panicMessage));
         }
+
+        playerShots.sweepMarkedData();
     }
 
     override void onEvent(Event event) {
@@ -101,10 +119,13 @@ final class SceneGui: GuiElementCanvas {
         _sparks.draw();
 
         // @TODO review draw order
+        _player.draw();
         foreach(Enemy enemy; enemies) {
             enemy.draw();
         }
-        _player.draw();
+        foreach(Shot shot; playerShots) {
+            shot.draw();
+        }
         
         _modularCanvas.position = canvas.position;
         _modularCanvas.draw(position);

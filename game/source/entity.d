@@ -15,6 +15,7 @@ abstract class Entity {
         bool _isFalling, _canDoubleJump, _hasGravity;
 
         int _index;
+        int _life = 5, _maxLife = 5;
 
         enum Direction {
             Left, Right
@@ -55,7 +56,7 @@ abstract class Entity {
         }
         
         if(_isFalling) {
-            //Default
+            // Default
             if(position.y > (- _size.y / 2f)) {
                 _position.y = - _size.y / 2f;
                 _isFalling = false;
@@ -70,17 +71,4 @@ abstract class Entity {
     abstract void draw();
     abstract void fire();
     abstract void handleCollision(Shot shot);
-
-    // APIs to handle behaviour of entities in VM
-    /*public void getPosition(GrCall call) {
-        call.setFloat(_position.x);
-        call.setFloat(_position.y);
-    }
-
-    public void setPosition(GrCall call) {
-        float x = call.getFloat("x");
-        float y = call.getFloat("y");
-
-        _position = Vec2f(x, y);
-    }*/
 }

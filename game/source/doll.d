@@ -57,7 +57,7 @@ final class Doll: Entity {
 	override void fire() {
         createPlayerShot(_position,
                 Vec2f.one,
-                5,
+                1,
                 Color.red,
                 mousePosition - _position,
                 10f,
