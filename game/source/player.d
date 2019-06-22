@@ -3,7 +3,7 @@ module game.player;
 import std.conv: to;
 import std.stdio: writeln;
 import atelier;
-import game.entity, game.particles, game.shot;
+import game.entity, game.particles, game.shot, game.global;
 
 import derelict.sdl2.sdl;
 
@@ -11,7 +11,6 @@ final class Player: Entity {
     private {
         bool        _hasPlayerInput;
         Animation   _currentAnim, _idleAnim, _runAnim, _fallAnim, _stopAnim, _jumpAnim, _recoverAnim;
-        ShotArray   _shots;
         Timer       _shotTimer, _trailTimer;
         bool        _wasFalling;
     }
@@ -32,8 +31,7 @@ final class Player: Entity {
         _size = to!Vec2f(_idleAnim.tileSize);
         _position = Vec2f(0f, -_size.y / 2f);
         _speed = Vec2f.zero;
-        _shotTimer.start(.5f);
-        _shots = new ShotArray();
+        playerShots = new ShotArray();
     }
 
     override void updateMovement(float deltaTime) {
@@ -155,14 +153,14 @@ final class Player: Entity {
         _stopAnim.update(deltaTime);
         _recoverAnim.update(deltaTime);
 
-        foreach(Shot shot; _shots) {
+        foreach(Shot shot; playerShots) {
             shot.update(deltaTime);
         }
     }
 
     override void draw() {
         _currentAnim.draw(_position);
-        foreach(Shot shot; _shots) {
+        foreach(Shot shot; playerShots) {
             shot.draw();
         }
     }
@@ -172,7 +170,7 @@ final class Player: Entity {
             createPlayerShot(_position,
                 Vec2f.one,
                 5,
-                Color.white,
+                Color.red,
                 mousePosition - _position,
                 10f,
                 5 * 60f);
@@ -195,7 +193,7 @@ final class Player: Entity {
         shot.damage      = damage;
         shot.spriteAngle = normalizedDirection.angle();
 
-        _shots.push(shot);
+        playerShots.push(shot);
         //playSound(SoundType.Shot);
     }
 }

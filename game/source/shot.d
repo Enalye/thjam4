@@ -5,12 +5,6 @@ import game.entity;
 
 alias ShotArray = IndexedArray!(Shot, 2000);
 
-private {
-    ShotArray _playerShots, _enemyShots;
-}
-
-ShotArray playerShots, enemyShots;
-
 class Shot {
     protected {
         Vec2f   _position, _direction;
@@ -31,6 +25,8 @@ class Shot {
         float timeToLive(float newTTL) { return _timeToLive = newTTL; }
         int damage(int damage) { return _damage = damage; }
         float spriteAngle(float spriteAngle) { return _spriteAngle = spriteAngle; }
+
+        void color(Color color) { _sprite.color = color; }
     }
 
     this(string fileName, Color color = Color.white, Vec2f scale = Vec2f.one) {
