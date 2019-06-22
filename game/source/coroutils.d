@@ -14,6 +14,7 @@ void addPrimitives() {
 	grAddPrimitive(&grSpawnEnemy, "spawnEnemy", ["index", "name", "x", "y"], [grInt, grString, grFloat, grFloat]);
 	grAddPrimitive(&grGetPosition, "getPosition", ["index"], [grInt], [grFloat, grFloat]);
 	grAddPrimitive(&grSetPosition, "setPosition", ["index", "x", "y"], [grInt, grFloat, grFloat]);
+	grAddPrimitive(&grIsAlive, "isAlive", ["index"], [grInt], [grBool]);
 }
 
 private void grPosSin(GrCall call) {
@@ -57,4 +58,10 @@ private void grSetPosition(GrCall call) {
 	float y = call.getFloat("y");
 	Enemy enemy = enemies[index];
 	enemy.position = Vec2f(x, y);
+}
+
+private void grIsAlive(GrCall call) {
+	int index = call.getInt("index");
+	Enemy enemy = enemies[index];
+	call.setBool(enemy.isAlive());
 }
