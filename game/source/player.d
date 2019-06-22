@@ -4,6 +4,7 @@ import std.conv: to;
 import std.stdio: writeln;
 import atelier;
 import game.entity, game.particles, game.shot, game.global, game.doll, game.scene, game.enemy;
+import game.dollthread;
 
 import derelict.sdl2.sdl;
 
@@ -14,6 +15,7 @@ final class Player: Entity {
         Timer       _shotTimer, _trailTimer;
         bool        _wasFalling;
         Doll        _currentDoll;
+        DollThread  _dollThread;
     }
 
     Vec2f mousePosition = Vec2f.zero;
@@ -39,6 +41,10 @@ final class Player: Entity {
 
         dolls.push(new Doll(_position));
         _currentDoll = dolls[0];
+        _dollThread = new DollThread;
+        _dollThread.doll = _currentDoll;
+        _dollThread.player = this;
+        _dollThread.init();
     }
 
     override void updateMovement(float deltaTime) {
@@ -195,6 +201,10 @@ final class Player: Entity {
     }
 
     override void update(float deltaTime) {
+        _dollThread.doll = _currentDoll;
+        _dollThread.player = this;
+        _dollThread.update(deltaTime);
+
         _idleAnim.update(deltaTime);
         _runAnim.update(deltaTime);
         _fallAnim.update(deltaTime);
@@ -211,6 +221,7 @@ final class Player: Entity {
     }
 
     override void draw() {
+        _dollThread.draw();
         _currentAnim.draw(_position);
         _currentDoll.draw();
     }
