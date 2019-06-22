@@ -20,6 +20,10 @@ final class Player: Entity {
 
     Vec2f mousePosition = Vec2f.zero;
 
+    @property {
+        Doll currentDoll() { return _currentDoll; }
+    }
+
     this() {
         _idleAnim = new Animation("alice.idle");
         _runAnim = new Animation("alice.run");
@@ -55,6 +59,7 @@ final class Player: Entity {
         _dollThread.init();
 
         hud.player = this;
+        hud.changeDoll();
     }
 
     private {
@@ -75,6 +80,8 @@ final class Player: Entity {
         _currentDoll.position = _position;
         _dollThread.doll = _currentDoll;
         _dollThread.init();
+
+        hud.changeDoll();
         
         _dollSelectTimer.start(.5f);
     }
