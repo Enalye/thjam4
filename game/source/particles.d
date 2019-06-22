@@ -2,6 +2,8 @@ module game.particles;
 
 import atelier;
 
+import game.scene;
+
 private {
     Sparks _sparks;
 }

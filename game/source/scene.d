@@ -7,6 +7,14 @@ import game.player, game.camera, game.entity, game.level, game.enemy, game.parti
 
 import std.stdio: writeln;
 
+private {
+    Canvas _modularCanvas;
+}
+
+void pushModularCanvas() {
+    pushCanvas(_modularCanvas, false);
+}
+
 void onSceneStart() {
     removeRootGuis();
     addRootGui(new SceneGui);
@@ -19,7 +27,6 @@ final class SceneGui: GuiElementCanvas {
         Level _level;
         Sparks _sparks;
         GrEngine _vm;
-        Canvas _additiveCanvas;
 
         IndexedArray!(Enemy, 100u) _enemies;
     }
@@ -35,8 +42,8 @@ final class SceneGui: GuiElementCanvas {
 
         _sparks = createSparks();
 
-        _additiveCanvas = new Canvas(screenSize);
-        _additiveCanvas.setColorMod(Color.white, Blend.AdditiveBlending);
+        _modularCanvas = new Canvas(screenSize);
+        _modularCanvas.setColorMod(Color.white, Blend.ModularBlending);
 
         _level = fetch!Level("test");
         _vm    = new GrEngine;
@@ -84,10 +91,16 @@ final class SceneGui: GuiElementCanvas {
         _level.draw();
         _sparks.draw();
         _player.draw();
-        pushCanvas(_additiveCanvas, true);
-    
+        
+        _modularCanvas.position = canvas.position;
+        _modularCanvas.draw(position);
+        pushCanvas(_modularCanvas, true);
+        drawFilledRect(position - screenSize / 2f, screenSize, Color.white * .2f);
+        auto glow = fetch!Sprite("fx.glow");
+        glow.size = Vec2f.one * 600f;
+        glow.draw(_player.position);
         popCanvas();
-        _additiveCanvas.draw(position);
+        
         drawFilledRect(Vec2f(position.x - screenWidth / 2f, 0f), Vec2f(screenWidth, 5f), Color.white);
     }
 }
