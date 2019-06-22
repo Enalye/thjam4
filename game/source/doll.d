@@ -18,8 +18,9 @@ final class Doll: Entity {
 	Vec2f mousePosition = Vec2f.zero;
 	Vec2f playerPosition = Vec2f.zero;
 
-	this(Vec2f position) {
+	this(Vec2f position, Color color) {
 		_sprite = fetch!Sprite("doll");
+        _sprite.color = color;
 		_threadLength = 250f;
 		_position = position;
 	}

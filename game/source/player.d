@@ -39,7 +39,8 @@ final class Player: Entity {
         playerShots = new ShotArray();
         dolls = new DollArray();
 
-        dolls.push(new Doll(_position));
+        dolls.push(new Doll(_position, Color.red));
+        dolls.push(new Doll(_position, Color(255f, 165f, 0f)));
         _currentDoll = dolls[_dollIndex];
         _dollThread = new DollThread;
         _dollThread.doll = _currentDoll;
