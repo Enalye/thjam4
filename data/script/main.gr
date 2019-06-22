@@ -1,10 +1,25 @@
 import "data/script/rainbow.gr"
 import "data/script/fairy.gr"
 
+func wait(int n) {
+	loop(n) {
+		yield;
+	}
+}
+
 main {
 	playerShots();
 
-	let enemyIdx = 0;
-	spawnEnemy(enemyIdx, "enemy2", 500f, -150f);
-	move(enemyIdx);
+	int enemyIdx = 0;
+	array posx = [500f, 600f, 700f, 800f, 900f];
+	array posy = [-150f, -150f, -150f, -150f, -150f];
+
+	loop (5) {
+		float x = posx[enemyIdx] as float;
+		float y = posy[enemyIdx] as float;
+
+		spawnEnemy(enemyIdx, "enemy2", x, y);
+		move(enemyIdx);
+		enemyIdx++;
+	}
 }
