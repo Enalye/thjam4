@@ -1,14 +1,14 @@
 module game.shot;
 
 import atelier;
-import game.entity;
+import game.entity, game.scene;
 
 alias ShotArray = IndexedArray!(Shot, 2000);
 
 class Shot {
     protected {
         Vec2f   _position, _direction;
-        Sprite  _sprite;
+        Sprite  _sprite, _glowSprite;
         float   _spriteAngle;
         float   _radius = 25f;
         float   _time = 0f, _timeToLive = 1f;
@@ -33,6 +33,7 @@ class Shot {
         _sprite = fetch!Sprite(fileName);
         _sprite.color = color;
         _sprite.scale = scale;
+        _glowSprite = fetch!Sprite("fx.glow");        
     }
 
     void update(float deltaTime) {
@@ -46,6 +47,12 @@ class Shot {
     void draw() {
         _sprite.angle = _spriteAngle;
         _sprite.draw(_position);
+
+        pushModularCanvas();
+        _glowSprite.scale = _sprite.scale * 5f;
+        _glowSprite.color = mix(_sprite.color, Color.white);
+        _glowSprite.draw(_position);
+        popCanvas();
     }
 
     bool handleCollision(Entity entity) {

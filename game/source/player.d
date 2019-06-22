@@ -3,7 +3,7 @@ module game.player;
 import std.conv: to;
 import std.stdio: writeln;
 import atelier;
-import game.entity, game.particles, game.shot, game.global;
+import game.entity, game.particles, game.shot, game.global, game.scene;
 
 import derelict.sdl2.sdl;
 
