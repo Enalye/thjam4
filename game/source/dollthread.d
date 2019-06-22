@@ -53,9 +53,12 @@ final class DollThread {
     }
 
     void draw() {
-        drawLine(player.position, _points[0].position, Color.white);
+        Color[] colors = [Color.red, Color.blue, Color.white];
+
+        drawLine(player.position, _points[0].position, Color.red);
         foreach(int i; 0.. _nbPoints - 1) {
-            drawLine(_points[i].position, _points[i + 1].position, Color.white);
+            Color color = colors[i % 3];
+            drawLine(_points[i].position, _points[i + 1].position, color);
         }
         drawLine(_points[$ - 1].position, doll.position, Color.white);
     }
