@@ -1,18 +1,18 @@
-func rainbow(float frequency) {
+task rainbow(float frequency) {
     let r, g, b, i = 0f;
-    loop  {
-    	r = psin(frequency * i);
-   		g = psin(frequency * i + 2f);
-   		b = psin(frequency * i + 4f);
-   		setColor(r, g, b);
-   		i++;
-    	yield;
+    loop {
+        r = psin(frequency * i);
+        g = psin(frequency * i + 2f);
+        b = psin(frequency * i + 4f);
+        setColor(r, g, b);
+        i++;
+        yield;
     }
 }
 
 main {
-	let frequency = .3;
-	let steps     = 32;
+    let frequency = .3;
+    let steps     = 32;
 
-	rainbow(frequency);
+    rainbow(frequency);
 }

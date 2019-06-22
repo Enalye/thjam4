@@ -3,7 +3,7 @@ module game.player;
 import std.conv: to;
 import std.stdio: writeln;
 import atelier;
-import game.entity, game.particles, game.shot, game.global;
+import game.entity, game.particles, game.shot, game.global, game.doll;
 
 import derelict.sdl2.sdl;
 
@@ -13,6 +13,7 @@ final class Player: Entity {
         Animation   _currentAnim, _idleAnim, _runAnim, _fallAnim, _stopAnim, _jumpAnim, _recoverAnim;
         Timer       _shotTimer, _trailTimer;
         bool        _wasFalling;
+        Doll        _currentDoll;
     }
 
     Vec2f mousePosition = Vec2f.zero;
@@ -31,7 +32,12 @@ final class Player: Entity {
         _size = to!Vec2f(_idleAnim.tileSize);
         _position = Vec2f(0f, -_size.y / 2f);
         _speed = Vec2f.zero;
+
         playerShots = new ShotArray();
+        dolls = new DollArray();
+
+        dolls.push(new Doll(_position));
+        _currentDoll = dolls[0];
     }
 
     override void updateMovement(float deltaTime) {
@@ -156,10 +162,15 @@ final class Player: Entity {
         foreach(Shot shot; playerShots) {
             shot.update(deltaTime);
         }
+
+        _currentDoll.playerPosition = _position;
+        _currentDoll.mousePosition  = mousePosition;
+        _currentDoll.update(deltaTime);
     }
 
     override void draw() {
         _currentAnim.draw(_position);
+        _currentDoll.draw();
         foreach(Shot shot; playerShots) {
             shot.draw();
         }

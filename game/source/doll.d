@@ -1,7 +1,59 @@
 module game.doll;
 
-import game.entity;
+import atelier;
+import std.stdio: writeln;
+import game.entity, 	game.shot;
+
+alias DollArray = IndexedArray!(Doll, 7);
 
 final class Doll: Entity {
+	private {
+		Sprite _sprite; // @TODO animations instead
+		float  _threadLength; // Max length from player
+		Vec2f  _oldPosition;
+	}
 
+	Vec2f mousePosition = Vec2f.zero;
+	Vec2f playerPosition = Vec2f.zero;
+
+	this(Vec2f position) {
+		_sprite = fetch!Sprite("doll");
+		_threadLength = 250f;
+		_position = position;
+	}
+
+	override void updateMovement(float deltaTime) {
+
+	}
+
+	// @TODO lerp it !
+	override void update(float deltaTime) {
+        Vec2f playerToDoll = (mousePosition - playerPosition).normalized();
+
+		float distanceToPlayer = playerPosition.distance(_position);
+		float mouseToPlayer    = playerPosition.distance(mousePosition);
+
+		// Enough thread length (for old and new position)
+		if((distanceToPlayer < _threadLength) && (mouseToPlayer < _threadLength)) {
+			_position = mousePosition;
+		}
+		// Not enough thread length
+		else {
+			//writeln(playerToDoll);
+			_position = playerPosition + (playerToDoll * _threadLength);
+		}
+	}
+
+	override void draw() {
+    	_sprite.draw(_position);
+	}
+
+	override void fire() {
+        // @TODO
+	}
+
+
+    override void handleCollision(Shot shot) {
+        // @TODO
+    }
 }
