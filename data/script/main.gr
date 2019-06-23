@@ -12,9 +12,9 @@ main {
 		float x = posx[enemyIdx] as float;
 		float y = posy[enemyIdx] as float;
 
-		//Enemy enemy = spawnEnemy("enemy2", x, y);
-		//moveSkull(enemy);
-		//fireCircle(enemy);
+		Enemy enemy = spawnEnemy("enemy2", x, y);
+		moveSkull(enemy);
+		fireCircle(enemy);
 		enemyIdx++;
 	}
 }

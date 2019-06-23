@@ -18,11 +18,14 @@ enum DollType {
 
 final class Doll: Entity {
 	private {
-        Player   _player;
-		Sprite   _sprite; // @TODO animations instead
-		float    _threadLength; // Max length from player
-		Vec2f    _target;
-        DollType _type;
+        Player    _player;
+		Sprite    _sprite; // @TODO animations instead
+		float     _threadLength; // Max length from player
+		Vec2f     _target;
+        DollType  _type;
+
+        Animation _mirrorAnim;
+        Timer     _mirrorRecovery;
 	}
 
     bool isLocked;
@@ -34,6 +37,7 @@ final class Doll: Entity {
 	this(Player player, Vec2f position, Color color, DollType type, float threadLength = 250f) {
         _player = player;
 		_sprite = fetch!Sprite("doll");
+        _mirrorAnim = new Animation("mirror", TimeMode.Stopped);
         _sprite.color = color;
 		_threadLength = threadLength;
 		_position = position;
@@ -93,11 +97,17 @@ final class Doll: Entity {
 	}
 
 	override void update(float deltaTime) {
-
+        _mirrorAnim.update(deltaTime);
+        _mirrorRecovery.update(deltaTime);
 	}
 
 	override void draw() {
     	_sprite.draw(_position);
+        if(_mirrorAnim.isRunning()) {
+            Vec2f distanceToPlayer = _position - _player.position;
+            float offset = (distanceToPlayer.x > 0) ? 25f : -25f;
+            _mirrorAnim.draw(Vec2f(_position.x + offset, _position.y));
+        }
 	}
 
 	override void fire() {
@@ -127,13 +137,17 @@ final class Doll: Entity {
         case DollType.BOOMERANG:
             break;
         case DollType.SHIELD:
+            if(!_mirrorRecovery.isRunning()) {
+                _mirrorAnim.start(0.8f, TimeMode.Once);
+                _mirrorRecovery.start(1.2f);
+            }
             break;
         }
 	}
 
 
     override bool handleCollision(int damage, Shot shot) {
-        if(_type == DollType.SHIELD) {
+        if((_type == DollType.SHIELD) && _mirrorAnim.isRunning()) {
             Vec2f oldDirection = shot.direction();
             Vec2f newDirection = Vec2f(-oldDirection.x, -oldDirection.y);
             shot.direction = newDirection;
