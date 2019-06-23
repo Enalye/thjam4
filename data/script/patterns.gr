@@ -69,6 +69,8 @@ task flowerShot(Enemy enemy) {
 
         // Check enemy is still alive after the yield
         if(!isAlive(enemy)) {
+            wait(60);
+            setVictory();
             kill;
         }
     }

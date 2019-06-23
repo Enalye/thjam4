@@ -61,10 +61,10 @@ final class Doll: Entity {
             description = "Philia [Rainbow Shot]";
             break;
         case DollType.LASER:
-            description = "Eros [Laser]";
+            description = "Eros [Laser] (Out of order)";
             break;
         case DollType.EXPLOSIVE:
-            description = "Philautia [Explosive]";
+            description = "Philautia [Explosive] (Out of order)";
             break;
         case DollType.LANCE:
             description = "Ludus [Lance]";
@@ -73,7 +73,7 @@ final class Doll: Entity {
             description = "Agape [Teleportation]";
             break;
         case DollType.BOOMERANG:
-            description = "Storge [Boomerang]";
+            description = "Storge [Boomerang] (Out of order)";
             break;
         case DollType.SHIELD:
             description = "Pragma [Shield]";

@@ -6,7 +6,7 @@ import std.stdio: writeln;
 import std.conv;
 import atelier;
 import grimoire;
-import game.global, game.entity, game.shot, game.enemy, game.hud;
+import game.global, game.entity, game.shot, game.enemy, game.hud, game.menu;
 
 void addPrimitives() {
 	auto grEnemy = grAddUserType("Enemy");
@@ -27,6 +27,7 @@ void addPrimitives() {
 	grAddPrimitive(&grIsAlive, "isAlive", ["enemy"], [grEnemy], [grBool]);
 	grAddPrimitive(&grPrintEnemyPtr, "printEnemyPtr", ["enemy"], [grEnemy]);
 	grAddPrimitive(&grStartDialog, "startDialog", ["i"], [grInt]);
+	grAddPrimitive(&grSetVictory, "setVictory", [], []);
 }
 
 private void grCos(GrCall call) {
@@ -191,4 +192,8 @@ private void grStartDialog(GrCall call) {
 	if(i == 11) {
 		hud.setDialog("   Now feel the warmth of love{n}   and go back to being that pesky{n}   little doll we love!", 1, 1, false);
 	}
+}
+
+private void grSetVictory(GrCall call) {
+	setVictory();
 }
