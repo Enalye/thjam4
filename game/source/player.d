@@ -299,9 +299,11 @@ final class Player: Entity {
         }
     }
 
-    override void handleCollision(int damage, Shot shot = null) {
-        if(_iframesTimer.isRunning)
-            return;
+    override bool handleCollision(int damage, Shot shot = null) {
+        if(_iframesTimer.isRunning) {
+            return false;
+        }
+
         _life = _life - damage;
         if(_life < 0)
             _life = 0;
@@ -318,7 +320,9 @@ final class Player: Entity {
             _speed.y = -5f;
             break;
         }
+
         shakeCamera(Vec2f(25f, 15f), 1f);
         _iframesTimer.start(.2f);
+        return true;
     }
 }

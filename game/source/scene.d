@@ -98,8 +98,7 @@ final class SceneGui: GuiElementCanvas {
                 enemyShots.markInternalForRemoval(index);
             } else if(shot.handleCollision(_player)) {
                 enemyShots.markInternalForRemoval(index);
-            }
-            else if(shot.handleCollision(_player.currentDoll)) {
+            } else if(shot.handleCollision(_player.currentDoll)) {
                 enemyShots.markInternalForRemoval(index);
             }
         }
