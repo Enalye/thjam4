@@ -3,7 +3,7 @@ module game.entity;
 import std.algorithm.comparison;
 import atelier;
 import grimoire;
-import game.shot, game.global;
+import game.shot, game.global, game.level;
 
 enum EntityType { PLAYER, ENEMY };
 
@@ -73,7 +73,7 @@ abstract class Entity {
             }
         }
 
-        _position = _position.clamp(Vec2f(16f, -1500f), Vec2f(2486f, 200f));
+        _position = _position.clamp(Vec2f(16f, currentLevel.clampWidth), Vec2f(2486f, 200f));
     }
 
     abstract void updateMovement(float deltaTime);

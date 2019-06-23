@@ -8,6 +8,10 @@ private struct Layer {
     int tileWidth, tileHeight;
     Tileset tileset;
 
+    @property {
+        float clampWidth() { return (tileWidth * 32f) + 16f; }
+    }
+
     void load(JSONValue json) {
         ids = getJsonArrayInt(json, "data");
         tileset = fetch!Tileset("level");
