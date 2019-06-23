@@ -1,8 +1,12 @@
 task randomMove(Enemy enemy) {
+	printEnemyPtr(enemy);
     let baseX, baseY = getPosition(enemy);
 
     loop {
-		setTarget(enemy, rand(baseX - 90f, baseX + 90f), rand(baseY - 120f, baseY - 60f));
+    	float x = rand(baseX - 90f, baseX + 90f);
+    	float y = rand(baseY - 120f, baseY - 60f);
+		setTarget(enemy, x, y);
+
 		wait(60);
 	}
 }
