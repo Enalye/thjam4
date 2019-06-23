@@ -1,4 +1,5 @@
 
-task randomMove() {
-	
+task randomMove(Enemy enemy) {
+    let baseX, baseY = getPosition(enemy);
+	setTarget(enemy, rand(baseX + 90, baseX - 90), rand(baseY - 60, baseY - 120), 60);
 }

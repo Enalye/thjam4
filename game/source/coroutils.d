@@ -97,6 +97,12 @@ private void grSetMovementSpeed(GrCall call) {
 	enemy.movementSpeed = Vec2f(movX, movY);
 }
 
+private void grRandom(GrCall call) {
+	float min = call.getFloat("min");
+	float max = call.getFloat("max");
+	//call.setFloat();
+}
+
 private void grIsAlive(GrCall call) {
 	Enemy enemy = call.getUserData!Enemy("enemy");
 	call.setBool(enemy.isAlive());
