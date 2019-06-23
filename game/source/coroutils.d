@@ -26,6 +26,8 @@ void addPrimitives() {
 	grAddPrimitive(&grRandom, "rand", ["min", "max"], [grFloat, grFloat], [grFloat]);
 	grAddPrimitive(&grIsAlive, "isAlive", ["enemy"], [grEnemy], [grBool]);
 	grAddPrimitive(&grPrintEnemyPtr, "printEnemyPtr", ["enemy"], [grEnemy]);
+	grAddPrimitive(&grStartDialog, "startDialog", [], []);
+	grAddPrimitive(&grIsDialogueOver, "isDialogOver", [], [], [grBool]);
 }
 
 private void grCos(GrCall call) {
@@ -138,4 +140,12 @@ private void grRandom(GrCall call) {
 private void grIsAlive(GrCall call) {
 	Enemy enemy = call.getUserData!Enemy("enemy");
 	call.setBool(enemy.isAlive());
+}
+
+private void grStartDialog(GrCall call) {
+	// @TODO
+}
+
+private void grIsDialogueOver(GrCall call) {
+	// @TODO
 }

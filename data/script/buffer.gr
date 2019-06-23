@@ -1,0 +1,13 @@
+    loop {
+        let distance = getDistanceToPlayer(enemy);
+
+        if(distance < 1000f) {
+            startDialog();
+        }
+
+        if(isDialogOver()) {
+            break;
+        }
+
+        yield;
+    }
