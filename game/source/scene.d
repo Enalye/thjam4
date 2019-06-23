@@ -71,9 +71,14 @@ final class SceneGui: GuiElementCanvas {
     
     void updateShots(float deltaTime) {
         // Update collisons of player shots
-        foreach(Shot shot, uint index; playerShots) {            
+        foreach(Shot shot, uint index; playerShots) {      
             // Update movement of player shots
             shot.updateMovement(deltaTime);
+
+            if(!shot.isAlive) {
+                playerShots.markInternalForRemoval(index);
+                continue;
+            }
 
             // Handle collisions with enemies
             if(_level.checkCollision(shot.position)) {
@@ -94,6 +99,11 @@ final class SceneGui: GuiElementCanvas {
         foreach(Shot shot, uint index; enemyShots) {
             // Update movement of enemy shots
             shot.updateMovement(deltaTime);
+
+            if(!shot.isAlive) {
+                enemyShots.markInternalForRemoval(index);
+                continue;
+            }
 
             // Handle collisions with enemies
             if(_level.checkCollision(shot.position)) {
