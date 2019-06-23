@@ -40,6 +40,8 @@ final class SceneGui: GuiElementCanvas {
         Background _bg;
     }
 
+    bool isLocked;
+
     this() {
         position(Vec2f.zero);
         size(screenSize);
@@ -67,9 +69,13 @@ final class SceneGui: GuiElementCanvas {
         playerShots = new ShotArray;
         enemyShots = new ShotArray;
         loadScripts();
+        sceneGlobal = this;
     }
     
     void updateShots(float deltaTime) {
+        if(isLocked)
+            return;
+
         // Update collisons of player shots
         foreach(Shot shot, uint index; playerShots) {      
             // Update movement of player shots
@@ -138,6 +144,9 @@ final class SceneGui: GuiElementCanvas {
     }*/
 
     override void update(float deltaTime) {
+        if(isLocked)
+            return;
+
         updateShots(deltaTime);
         _camera.update(deltaTime);
         _player.updatePhysic(deltaTime);

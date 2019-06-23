@@ -2,7 +2,7 @@ module game.global;
 
 import atelier;
 import grimoire;
-import game.entity, game.enemy, game.shot, game.doll, game.level, game.hud;
+import game.entity, game.enemy, game.shot, game.doll, game.level, game.hud, game.scene;
 
 // Owned by the scene
 Level currentLevel;
@@ -21,6 +21,8 @@ EnemyArray enemies;
 ShotArray enemyShots;
 
 HudGui hud;
+
+SceneGui sceneGlobal;
 
 void createShot(EntityType ownerType, Vec2f pos, Vec2f scale, int damage, Color color, Vec2f direction, float speed, float timeToLive) {
 	Shot shot = new Shot("shot", color, scale);
