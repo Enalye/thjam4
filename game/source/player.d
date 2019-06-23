@@ -287,6 +287,11 @@ final class Player: Entity {
         }
         _currentDoll.mousePosition  = mousePosition;
         _currentDoll.update(deltaTime);
+
+        if(isNaN(_currentDoll.position.x) || isNaN(_currentDoll.position.y)) {
+            _currentDoll.init();
+            _dollThread.init();
+        }
     }
 
     override void draw() {
