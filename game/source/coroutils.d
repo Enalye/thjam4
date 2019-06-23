@@ -6,7 +6,7 @@ import std.stdio: writeln;
 import std.conv;
 import atelier;
 import grimoire;
-import game.global, game.entity, game.shot, game.enemy;
+import game.global, game.entity, game.shot, game.enemy, game.hud, game.menu;
 
 void addPrimitives() {
 	auto grEnemy = grAddUserType("Enemy");
@@ -26,6 +26,8 @@ void addPrimitives() {
 	grAddPrimitive(&grRandom, "rand", ["min", "max"], [grFloat, grFloat], [grFloat]);
 	grAddPrimitive(&grIsAlive, "isAlive", ["enemy"], [grEnemy], [grBool]);
 	grAddPrimitive(&grPrintEnemyPtr, "printEnemyPtr", ["enemy"], [grEnemy]);
+	grAddPrimitive(&grStartDialog, "startDialog", ["i"], [grInt]);
+	grAddPrimitive(&grSetVictory, "setVictory", [], []);
 }
 
 private void grCos(GrCall call) {
@@ -138,4 +140,60 @@ private void grRandom(GrCall call) {
 private void grIsAlive(GrCall call) {
 	Enemy enemy = call.getUserData!Enemy("enemy");
 	call.setBool(enemy.isAlive());
+}
+
+private void grStartDialog(GrCall call) {
+	int i = call.getInt("i");
+
+	if(i == 0) {
+		hud.setDialog("   ... Medecine?{n}   Why are you here,{n}   and what with that look{n}   on your face?", 1, 1, false);
+	} 
+
+	if(i == 1) {
+		hud.setDialog("   So you've finaly come!{n}   You weren't eager to find me,{n}   right?", 1, 2, true);
+	}
+
+	if(i == 2) {
+		hud.setDialog("   Uh.. Well.. It's not..{n}", 2, 1, false);
+	}
+
+	if(i == 3) {
+		hud.setDialog("   Hehe, I see.{n}   You're afraid of Mania!{n}   The eigth form of love,{n}   the strongest one,{n}   the one that time cannot affect,{n}   which drove so many to madness..", 1, 1, true);
+	}
+
+	if(i == 4) {
+		hud.setDialog(" You're nothing more than{n} an obsession!{n} Why did you possess{n} that little doll?{n}", 1, 1, false);
+	}
+
+	if(i == 5) {
+		hud.setDialog(" Because obsession{n} had already taken her,{n} it was easy as pie", 1, 2, true);
+	}
+
+	if(i == 6) {
+		hud.setDialog(" I see...", 2, 1, false);
+	}
+
+	if(i == 7) {
+		hud.setDialog(" This little adventure made me{n} realize love's true strength.", 1, 1, false);
+	}
+
+	if(i == 8) {
+		hud.setDialog(" It's beyond a witch's magic{n} Beyond words on a paper..{n}", 1, 1, false);
+	}
+
+	if(i == 9) {
+		hud.setDialog(" It's in the blood that{n} runs through my veins.{n} and I can feel it{n} burning in my chest!", 1, 1, false);
+	}
+
+	if(i == 10) {
+		hud.setDialog("   Out of all,{n}   you're the one that{n}   deserves to be sealed!", 1, 1, false);
+	}
+
+	if(i == 11) {
+		hud.setDialog("   Now feel the warmth of love{n}   and go back to being that pesky{n}   little doll we love!", 1, 1, false);
+	}
+}
+
+private void grSetVictory(GrCall call) {
+	setVictory();
 }
