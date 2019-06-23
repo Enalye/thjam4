@@ -1,1 +1,1 @@
-{"DOCTYPE":"IMAGE","elements":[{"clip":{"h":67,"w":42,"x":12,"y":17},"name":"doll","type":"sprite"}],"texture":"media\/char\/doll.png"}
+{"DOCTYPE":"IMAGE","elements":[{"clip":{"h":100,"w":65,"x":0,"y":0},"columns":3,"lines":1,"maxtiles":0,"name":"doll.idle","type":"tileset"}],"texture":"media\/char\/doll.png"}
