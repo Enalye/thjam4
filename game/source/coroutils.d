@@ -23,6 +23,7 @@ void addPrimitives() {
 	grAddPrimitive(&grSetTarget, "setTarget", ["enemy", "x", "y"], [grEnemy, grFloat, grFloat]);
 	grAddPrimitive(&grRandom, "rand", ["min", "max"], [grFloat, grFloat], [grFloat]);
 	grAddPrimitive(&grIsAlive, "isAlive", ["enemy"], [grEnemy], [grBool]);
+	grAddPrimitive(&grPrintEnemyPtr, "printEnemyPtr", ["enemy"], [grEnemy]);
 }
 
 private void grCos(GrCall call) {
@@ -39,6 +40,11 @@ private void grPosSin(GrCall call) {
 
 private void grPrint(GrCall call) {
     writeln(call.getString("value"));
+}
+
+private void grPrintEnemyPtr(GrCall call) {
+	Enemy enemy = call.getUserData!Enemy("enemy");
+	writeln(cast(void*)enemy);
 }
 
 private void grSetColor(GrCall call) {
@@ -112,10 +118,9 @@ private void grSetMovementSpeed(GrCall call) {
 }
 
 private void grRandom(GrCall call) {
-	Random seed = Random(42);
 	float min   = call.getFloat("min");
 	float max   = call.getFloat("max");
-	call.setFloat(uniform(min, max, seed));
+	call.setFloat(uniform(min, max));
 }
 
 private void grIsAlive(GrCall call) {

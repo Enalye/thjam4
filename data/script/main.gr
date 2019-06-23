@@ -8,9 +8,10 @@ main {
 	int enemyIdx = 0;
 	array posx = [500f, 600f, 700f, 800f, 900f];
 
-	Enemy medicine = spawnEnemy("medicine", 1200f, -80f);
+	Enemy medicine = spawnEnemy("medicine", 2000f, -80f);
+	printEnemyPtr(medicine);
 	randomMove(medicine);
-	
+
 	loop (5) {
 		float x = posx[enemyIdx] as float;
 
@@ -19,4 +20,6 @@ main {
 		fireCircle(enemy);
 		enemyIdx++;
 	}
+
+	printEnemyPtr(medicine);
 }
