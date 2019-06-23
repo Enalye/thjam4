@@ -329,17 +329,17 @@ final class Player: Entity {
         
         final switch(_direction) with(Direction) {
         case Right:
-            _movementSpeed.x = -10f;
-            _speed.y = -5f;
+            _movementSpeed.x = -5f;
+            _speed.y = -3f;
             break;
         case Left:
-            _movementSpeed.x = 10f;
-            _speed.y = -5f;
+            _movementSpeed.x = 5f;
+            _speed.y = -3f;
             break;
         }
 
-        shakeCamera(Vec2f(25f, 15f), 1f);
-        _iframesTimer.start(.2f);
+        shakeCamera(Vec2f(15f, 5f), 1f);
+        _iframesTimer.start(1f);
         return true;
     }
 
