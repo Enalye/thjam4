@@ -139,9 +139,9 @@ final class Doll: Entity {
             shot.spriteAngle = shot.spriteAngle + 180;
 
             // Swap arrays
-            int index = playerShots.push(shot);       
-            enemyShots.pop(shot.index);
+            int index = playerShots.push(shot);
             shot.index = index;
+            shot.isAlive = true;
         }
     }
 }

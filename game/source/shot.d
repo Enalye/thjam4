@@ -20,6 +20,7 @@ class Shot {
 
     @property {
         bool isAlive() const { return _isAlive; }
+        bool isAlive(bool newIsAlive) { return _isAlive = newIsAlive; }
         int damage() const { return _damage; }
 
         Vec2f position() { return _position; }
@@ -63,8 +64,8 @@ class Shot {
 
     bool handleCollision(Entity entity) {
         if(entity.position.distance(_position) < _radius) {
-            entity.handleCollision(damage, this);
             _isAlive = false;
+            entity.handleCollision(damage, this);
             return true;
         }
         return false;
