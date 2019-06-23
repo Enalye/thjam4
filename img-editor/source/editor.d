@@ -249,7 +249,7 @@ final class GraphicEditorGui: GuiElement {
         if(event.type == EventType.DropFile) {
             string path = relativePath(event.str);
             auto ext = extension(path);
-            if(ext == ".png") {
+            if(ext == ".png" || ext == ".jpg" || ext == ".jpeg") {
                 load(path);
             }
             else if(ext == ".json") {
