@@ -52,7 +52,7 @@ private struct Layer {
         }
         
         const float step = (pos.x % 32f) / 32f;
-        if(ids[id] == 1 || ids[id] == 3)
+        if(ids[id] == 1 || ids[id] == 3 || ids[id] >= 5)
             hitY = origin.y + coords.y * 32f;
         else if(ids[id] == 2)
             hitY = origin.y + coords.y * 32f + lerp(32f, 0f, step);

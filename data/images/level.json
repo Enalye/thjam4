@@ -1,1 +1,1 @@
-{"DOCTYPE":"IMAGE","elements":[{"clip":{"h":32,"w":32,"x":0,"y":0},"columns":4,"lines":1,"maxtiles":0,"name":"level","type":"tileset"}],"texture":"media\/level\/level.png"}
+{"DOCTYPE":"IMAGE","elements":[{"clip":{"h":32,"w":32,"x":0,"y":0},"columns":4,"lines":2,"maxtiles":6,"name":"level","type":"tileset"}],"texture":"media\/level\/level.png"}
