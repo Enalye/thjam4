@@ -65,7 +65,7 @@ final class SceneGui: GuiElementCanvas {
         playerShots = new ShotArray;
         enemyShots = new ShotArray;
 
-        currentLevel = _level = fetch!Level("test");
+        currentLevel = _level = fetch!Level("level1");
         loadScripts();
     }
     
