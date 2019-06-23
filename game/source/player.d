@@ -116,8 +116,9 @@ final class Player: Entity {
             _movementSpeed.x = _movementSpeed.x > -5f ?
                 _movementSpeed.x - deltaTime * (_isFalling ? .3f : .8f) :
                 -5f;
-            if(dash(0))
+            if(dash(0)) {
                 _movementSpeed.x = -15f;
+            }
 
             _direction = Direction.Left;
             _idleAnim.flip = Flip.HorizontalFlip;
@@ -134,8 +135,9 @@ final class Player: Entity {
                 _movementSpeed.x + deltaTime * (_isFalling ? .3f : .8f) :
                 5f;
 
-            if(dash(1))
+            if(dash(1)) {
                 _movementSpeed.x = 15f;
+            }
 
             _direction = Direction.Right;
             _idleAnim.flip = Flip.NoFlip;
@@ -160,6 +162,7 @@ final class Player: Entity {
         }
         if(_isFalling && _canDoubleJump && getKeyDown("jump")) {
             _canDoubleJump = false;
+            _speed.x = 0f;
             _speed.y = 0f;
             _acceleration.y += -7f;
         }
@@ -168,17 +171,20 @@ final class Player: Entity {
 
         // Recover phase
         if(_recoverAnim.isRunning) {
+            _speed.x = 0f;
             _currentAnim = _recoverAnim;
         }
         else if(_wasFalling && !_isFalling) {
-            if(_currentAnim != _recoverAnim)
+            if(_currentAnim != _recoverAnim) {
                 _recoverAnim.start(.15f);
+            }
             _currentAnim = _recoverAnim;
         }
         else if(_isFalling) {
             if(_speed.y > .1f) {
-                if(_currentAnim != _fallAnim)
+                if(_currentAnim != _fallAnim) {
                     _fallAnim.start(.5f);
+                }
                 _currentAnim = _fallAnim;
             }
             else {
@@ -189,8 +195,9 @@ final class Player: Entity {
             _currentAnim = _runAnim;
         }
         else if(_movementSpeed.x > .1f || _movementSpeed.x < -.1f) {
-            if(_currentAnim != _stopAnim)
+            if(_currentAnim != _stopAnim) {
                 _stopAnim.start(.5f);
+            }
             _currentAnim = _stopAnim;
         }
         else {
@@ -248,8 +255,6 @@ final class Player: Entity {
 
         _shotTimer.update(deltaTime);
         _wasFalling = _isFalling;
-
-        
     }
 
     override void updatePhysic(float deltaTime) {
@@ -274,20 +279,24 @@ final class Player: Entity {
         _recoverAnim.update(deltaTime);
 
         _currentDoll.playerPosition = _position;
-        if(_currentDoll.isLocked)
+        if(_currentDoll.isLocked) {
             _currentDoll.movementSpeed = Vec2f.zero;
-        else
+        }
+        else {
             _currentDoll.movementSpeed = _movementSpeed;
+        }
         _currentDoll.mousePosition  = mousePosition;
         _currentDoll.update(deltaTime);
     }
 
     override void draw() {
         _dollThread.draw();
-        if(_iframesTimer.isRunning)
+        if(_iframesTimer.isRunning) {
             _currentAnim.tileset.blend = Blend.AdditiveBlending;
-        else
+        } else {
             _currentAnim.tileset.blend = Blend.AlphaBlending;
+        }
+
         _currentAnim.draw(_position);
         _currentDoll.draw();
     }
@@ -305,8 +314,10 @@ final class Player: Entity {
         }
 
         _life = _life - damage;
-        if(_life < 0)
+        if(_life < 0) {
             _life = 0;
+        }
+
         _isFalling = true;
         _canDoubleJump = false;
         
@@ -324,5 +335,15 @@ final class Player: Entity {
         shakeCamera(Vec2f(25f, 15f), 1f);
         _iframesTimer.start(.2f);
         return true;
+    }
+
+    void lanceJump(Vec2f target) {
+        Vec2f jumpMovement = (target - _position).normalized();
+
+        _jumpAnim.start(.5f, TimeMode.Once);
+        _currentAnim = _jumpAnim;
+        _acceleration.x += 8f  * jumpMovement.x;
+        _acceleration.y += 16f * jumpMovement.y;
+        _isFalling = true;
     }
 }

@@ -33,10 +33,10 @@ void onSceneStart() {
 
 final class SceneGui: GuiElementCanvas {
     private {
-        Player _player;
-        Camera _camera;
-        Level _level;
-        Sparks _sparks;
+        Player     _player;
+        Camera     _camera;
+        Level      _level;
+        Sparks     _sparks;
         Background _bg;
     }
 
@@ -80,6 +80,7 @@ final class SceneGui: GuiElementCanvas {
                 playerShots.markInternalForRemoval(index);
                 continue;
             }
+
             foreach(Enemy enemy; enemies) {
                 if(shot.handleCollision(enemy)) {
                     playerShots.markInternalForRemoval(index);
@@ -89,6 +90,7 @@ final class SceneGui: GuiElementCanvas {
         }
         playerShots.sweepMarkedData();
 
+        // Update collisons of enemy shots
         foreach(Shot shot, uint index; enemyShots) {
             // Update movement of enemy shots
             shot.updateMovement(deltaTime);

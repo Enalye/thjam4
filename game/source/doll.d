@@ -2,7 +2,7 @@ module game.doll;
 
 import atelier;
 import std.stdio: writeln;
-import game.entity, game.shot, game.global, game.player;
+import game.entity, game.shot, game.global, game.player, game.level;
 
 alias DollArray = IndexedArray!(Doll, 8);
 
@@ -117,6 +117,7 @@ final class Doll: Entity {
         case DollType.EXPLOSIVE:
             break;
         case DollType.LANCE:
+            checkCollision(currentLevel);
             break;
         case DollType.TELEPORT:
             Vec2f oldPosition = _player.position;
@@ -143,6 +144,14 @@ final class Doll: Entity {
             shot.index = index;
             shot.isAlive = true;
             return true;
+        }
+
+        return false;
+    }
+
+    bool checkCollision(Level level) {
+        if((_type == DollType.LANCE) && (level.checkCollision(_position))) {
+            _player.lanceJump(_position);
         }
 
         return false;

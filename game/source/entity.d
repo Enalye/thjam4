@@ -1,5 +1,6 @@
 module game.entity;
 
+import std.algorithm.comparison;
 import atelier;
 import grimoire;
 import game.shot, game.global;
