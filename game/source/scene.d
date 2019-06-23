@@ -33,7 +33,6 @@ void onSceneStart() {
 
 final class SceneGui: GuiElementCanvas {
     private {
-        Player     _player;
         Camera     _camera;
         Level      _level;
         Sparks     _sparks;
@@ -51,9 +50,9 @@ final class SceneGui: GuiElementCanvas {
 
         currentLevel = _level = fetch!Level("level1");
 
-        _player = new Player;
+        player = new Player;
         _camera = createCamera(canvas);
-        _camera.followEntity(_player);
+        _camera.followEntity(player);
         _camera.clip = Vec4f(0f, -1500f, _level.clampWidth, 200f);
 
         enemies = new EnemyArray();
@@ -108,17 +107,17 @@ final class SceneGui: GuiElementCanvas {
             // Handle collisions with enemies
             if(_level.checkCollision(shot.position)) {
                 enemyShots.markInternalForRemoval(index);
-            } else if(shot.handleCollision(_player)) {
+            } else if(shot.handleCollision(player)) {
                 enemyShots.markInternalForRemoval(index);
-            } else if(shot.handleCollision(_player.currentDoll)) {
+            } else if(shot.handleCollision(player.currentDoll)) {
                 enemyShots.markInternalForRemoval(index);
             }
         }
         enemyShots.sweepMarkedData();
 
         foreach(Enemy entity; enemies) {
-            if(entity.position.distance(_player.position) < 40f) {
-                _player.handleCollision(1);
+            if(entity.position.distance(player.position) < 40f) {
+                player.handleCollision(1);
             }
         }
     }
@@ -140,8 +139,8 @@ final class SceneGui: GuiElementCanvas {
     override void update(float deltaTime) {
         updateShots(deltaTime);
         _camera.update(deltaTime);
-        _player.updatePhysic(deltaTime);
-        _player.update(deltaTime);
+        player.updatePhysic(deltaTime);
+        player.update(deltaTime);
         _sparks.update(deltaTime);
 
         foreach(Enemy enemy, uint index; enemies) {
@@ -177,10 +176,10 @@ final class SceneGui: GuiElementCanvas {
             if(isNaN(event.position.x) || isNaN(event.position.y))
                 break;
             _camera.mousePosition = event.position;
-            _player.mousePosition = event.position;
+            player.mousePosition = event.position;
             break;
         case MouseWheel:
-            _player.selectNextDoll(event.position.y > 0f);
+            player.selectNextDoll(event.position.y > 0f);
             break;
         default:
             break;
@@ -195,7 +194,7 @@ final class SceneGui: GuiElementCanvas {
         _sparks.draw();
 
         // @TODO review draw order
-        _player.draw();
+        player.draw();
         foreach(Enemy enemy; enemies) {
             enemy.draw();
         }
@@ -212,7 +211,7 @@ final class SceneGui: GuiElementCanvas {
         drawFilledRect(position - screenSize / 2f, screenSize, Color.white * .2f);
         auto glow = fetch!Sprite("fx.glow");
         glow.size = Vec2f.one * 800f;
-        glow.draw(_player.position);
+        glow.draw(player.position);
         popCanvas();
         
         //Debug ground

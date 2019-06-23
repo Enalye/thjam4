@@ -109,6 +109,14 @@ task moveRandom(Enemy enemy) {
 
 task moveToPlayer(Enemy enemy) {
     loop {
-        yield;
+        let x, y = getPlayerPosition();
+        let distance = getDistanceToPlayer(enemy);
+
+        if(distance < 300f) {
+            setTarget(enemy, x, y);
+        } else {
+            setMovementSpeed(enemy, 0f, 0f);
+        }
+        wait(30);
     }
 }

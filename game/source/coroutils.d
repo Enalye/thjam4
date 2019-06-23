@@ -19,6 +19,8 @@ void addPrimitives() {
 	grAddPrimitive(&grFireShot, "fireShot", ["enemy", "x", "y", "angle", "speed"], [grEnemy, grFloat, grFloat, grFloat, grFloat]);
 	grAddPrimitive(&grGetPosition, "getPosition", ["enemy"], [grEnemy], [grFloat, grFloat]);
 	grAddPrimitive(&grSetPosition, "setPosition", ["enemy", "x", "y"], [grEnemy, grFloat, grFloat]);
+	grAddPrimitive(&grGetPlayerPosition, "getPlayerPosition", [], [], [grFloat, grFloat]);
+	grAddPrimitive(&getDistanceToPlayer, "getDistanceToPlayer", ["enemy"], [grEnemy], [grFloat]);
 	grAddPrimitive(&grSetMovementSpeed, "setMovementSpeed", ["enemy", "movX", "movY"], [grEnemy, grFloat, grFloat]);
 	grAddPrimitive(&grSetTarget, "setTarget", ["enemy", "x", "y"], [grEnemy, grFloat, grFloat]);
 	grAddPrimitive(&grRandom, "rand", ["min", "max"], [grFloat, grFloat], [grFloat]);
@@ -97,6 +99,16 @@ private void grSetPosition(GrCall call) {
 	float x        = call.getFloat("x");
 	float y        = call.getFloat("y");
 	enemy.position = Vec2f(x, y);
+}
+
+private void grGetPlayerPosition(GrCall call) {
+	call.setFloat(player.position.x);
+	call.setFloat(player.position.y);
+}
+
+private void getDistanceToPlayer(GrCall call) {
+	Enemy enemy = call.getUserData!Enemy("enemy");
+	call.setFloat(player.position.distance(enemy.position));
 }
 
 private void grSetTarget(GrCall call) {
