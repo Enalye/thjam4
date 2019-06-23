@@ -219,6 +219,10 @@ final class SceneGui: GuiElementCanvas {
         _c1.draw(Vec2f(2517f, -32f));
         _c2.draw(Vec2f(2288f, -32f));
         _l.draw(Vec2f(2288f, -32f));
+        _a3.draw(Vec2f(3000f, -32f));
+        _a3.draw(Vec2f(4000f, -32f));
+        _a2.draw(Vec2f(5000f, -32f));
+        _l.draw(Vec2f(6000f, -32f));
         _a1.draw(Vec2f(7200, -32f));
         _a3.draw(Vec2f(7820, -32f));
         _a2.draw(Vec2f(3200, -32f));
