@@ -16,7 +16,7 @@ import game.loader, game.scene, game.menu;
 void main() {
 	try {
         //Initialize
-		createApplication(Vec2u(1280u, 720u), "Touhou Jam 4");
+		createApplication(Vec2u(1280u, 720u), "Margatroid Pride");
 
         import derelict.sdl2.sdl;
         bindKey("left", SDL_SCANCODE_A);
@@ -40,5 +40,5 @@ void onLoadComplete() {
 
 void onMainMenu() {
     removeRootGuis();
-    addRootGui(new MenuGui);
+    addRootGui(new IntroGui1);
 }
