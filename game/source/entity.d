@@ -70,6 +70,17 @@ abstract class Entity {
                 _isFalling = true;
             }
         }
+
+        if(currentLevel.checkCollision(Vec2f(_position.x + _size.x / 2f, _position.y - _size.y / 2f))) {
+            _position.x -= _movementSpeed.x;
+            _speed.x = 0f;
+            _movementSpeed.x = 0f;
+        }
+        if(currentLevel.checkCollision(Vec2f(_position.x - _size.x / 2f, _position.y - _size.y / 2f))) {
+            _position.x -= _movementSpeed.x;
+            _speed.x = 0f;
+            _movementSpeed.x = 0f;
+        }
         
         if(_isFalling) {
             // Default
