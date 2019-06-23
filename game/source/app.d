@@ -11,7 +11,7 @@ import std.stdio: writeln;
 
 import atelier;
 
-import game.loader, game.scene;
+import game.loader, game.scene, game.menu;
 
 void main() {
 	try {
@@ -39,5 +39,6 @@ void onLoadComplete() {
 }
 
 void onMainMenu() {
-    onSceneStart();
+    removeRootGuis();
+    addRootGui(new MenuGui);
 }
