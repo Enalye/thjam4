@@ -19,6 +19,7 @@ task moveSkull(Enemy enemy) {
 
         // Check enemy is still alive after the yield
         if(!isAlive(enemy)) {
+            setMovementSpeed(enemy, 0f, 0f);
         	kill;
         }
 

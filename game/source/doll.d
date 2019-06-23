@@ -95,7 +95,7 @@ final class Doll: Entity {
                 float distanceTarget = _target.distance(_position);
                 if(!isNaN(distanceTarget)) {
                     float rlerpValue = 0.8f * _threadLength;
-                    _acceleration = (_target - _position).normalized * rlerp(0f, rlerpValue, _target.distance(_position)) * 2f;
+                    _acceleration = (_target - _position).normalized * rlerp(0f, rlerpValue, distanceTarget) * 2f;
                 }
             }
         }
