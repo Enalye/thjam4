@@ -77,19 +77,21 @@ final class Doll: Entity {
             float distanceToPlayer = playerPosition.distance(_position);
             float mouseToPlayer    = playerPosition.distance(destination);
 
-            // Enough thread length (for old and new position)
-            if((distanceToPlayer < _threadLength) && (mouseToPlayer < _threadLength)) {
-                _target = destination;
-            }
-            // Not enough thread length
-            else {
-                _target = playerPosition + (playerToDoll * _threadLength);
-            }
+            if(!isNaN(distanceToPlayer) && !isNaN(mouseToPlayer)) {
+                // Enough thread length (for old and new position)
+                if((distanceToPlayer < _threadLength) && (mouseToPlayer < _threadLength)) {
+                    _target = destination;
+                }
+                // Not enough thread length
+                else {
+                    _target = playerPosition + (playerToDoll * _threadLength);
+                }
 
-            float distanceTarget = _target.distance(_position);
-            if(!isNaN(distanceTarget)) {
-                float rlerpValue = 0.8f * _threadLength;
-                _acceleration = (_target - _position).normalized * rlerp(0f, rlerpValue, _target.distance(_position)) * 2f;
+                float distanceTarget = _target.distance(_position);
+                if(!isNaN(distanceTarget)) {
+                    float rlerpValue = 0.8f * _threadLength;
+                    _acceleration = (_target - _position).normalized * rlerp(0f, rlerpValue, _target.distance(_position)) * 2f;
+                }
             }
         }
 

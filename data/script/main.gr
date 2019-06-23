@@ -16,5 +16,5 @@ main {
 		enemyIdx++;
 	}
 
-	Enemy medicine = spawnEnemy("medicine", 3000f, -300f);
+	Enemy medicine = spawnEnemy("medicine", 1200f, -80f);
 }
