@@ -19,13 +19,14 @@ enum DollType {
 final class Doll: Entity {
 	private {
         Player    _player;
-		Animation _idleAnimation, _currentAnimation;
+		Animation _idleAnimation, _idleToRightAnimation, _idleToLeftAnimation, _rightAnimation, _leftAnimation, _currentAnimation;
 		float     _threadLength; // Max length from player
 		Vec2f     _target;
         DollType  _type;
 
         Animation _mirrorAnim;
         Timer     _mirrorRecovery;
+        Color     _color;
 	}
 
     override void init() {
@@ -35,15 +36,21 @@ final class Doll: Entity {
 
     bool isLocked;
 
-	Vec2f mousePosition = Vec2f.zero;
+	Vec2f mousePosition  = Vec2f.zero;
 	Vec2f playerPosition = Vec2f.zero;
-    string name;
+    string description;
 
-	this(Player player, Vec2f position, Color color, DollType type, float threadLength = 250f) {
+	this(string name, Player player, Vec2f position, Color color, DollType type, float threadLength = 250f) {
         _player               = player;
-		_idleAnimation        = new Animation("doll.idle");
-        _idleAnimation.color  = color;
+
+		_idleAnimation        = new Animation(name ~ ".idle");
+        _idleToRightAnimation = new Animation(name ~ ".idle_to_right");
+        _idleToLeftAnimation  = new Animation(name ~ ".idle_to_left");
+        _rightAnimation       = new Animation(name ~ ".right");
+        _leftAnimation        = new Animation(name ~ ".left");
         _currentAnimation     = _idleAnimation;
+        _color                = color;
+
         _mirrorAnim           = new Animation("mirror", TimeMode.Stopped);
 		_threadLength         = threadLength;
 		_position             = position;
@@ -51,25 +58,25 @@ final class Doll: Entity {
 
         final switch(_type) with(DollType) { 
         case DollType.SHOT:
-            name = "Philia [Rainbow Shot]";
+            description = "Philia [Rainbow Shot]";
             break;
         case DollType.LASER:
-            name = "Eros [Laser]";
+            description = "Eros [Laser]";
             break;
         case DollType.EXPLOSIVE:
-            name = "Philautia [Explosive]";
+            description = "Philautia [Explosive]";
             break;
         case DollType.LANCE:
-            name = "Ludus [Lance]";
+            description = "Ludus [Lance]";
             break;
         case DollType.TELEPORT:
-            name = "Agape [Teleportation]";
+            description = "Agape [Teleportation]";
             break;
         case DollType.BOOMERANG:
-            name = "Storge [Boomerang]";
+            description = "Storge [Boomerang]";
             break;
         case DollType.SHIELD:
-            name = "Pragma [Shield]";
+            description = "Pragma [Shield]";
             break;
         }
 
@@ -77,10 +84,13 @@ final class Doll: Entity {
 	}
 
 	override void updateMovement(float deltaTime) {
+        float nearDistance = 10f;
+
         if(!isLocked) {
             Vec2f destination = mousePosition;
 
             Vec2f playerToDoll = (destination - playerPosition).normalized();
+            Vec2f mouseToDoll  = (destination - _position); 
 
             float distanceToPlayer = playerPosition.distance(_position);
             float mouseToPlayer    = playerPosition.distance(destination);
@@ -95,6 +105,19 @@ final class Doll: Entity {
                     _target = playerPosition + (playerToDoll * _threadLength);
                 }
 
+                if(_currentAnimation == _idleAnimation) {
+                    if(mouseToDoll.x > nearDistance) {
+                        _idleToRightAnimation.start(0.5f, TimeMode.Once);
+                        _currentAnimation = _idleToRightAnimation;
+                    } else if(mouseToDoll.x < -nearDistance) {
+                        _idleToLeftAnimation.start(0.5f, TimeMode.Once);
+                        _currentAnimation = _idleToLeftAnimation;
+                    }
+                } else if(abs(mouseToDoll.x) < nearDistance) {
+                    _idleAnimation.start(.5f, TimeMode.Loop);
+                    _currentAnimation = _idleAnimation;
+                }
+
                 float distanceTarget = _target.distance(_position);
                 if(!isNaN(distanceTarget)) {
                     float rlerpValue = 0.8f * _threadLength;
@@ -103,17 +126,29 @@ final class Doll: Entity {
             }
         }
 
+        if((_currentAnimation == _idleToRightAnimation) && (!_idleToRightAnimation.isRunning)) {
+            _rightAnimation.start(.5f, TimeMode.Loop);
+            _currentAnimation = _rightAnimation;
+        }
+
+        if((_currentAnimation == _idleToLeftAnimation) && (!_idleToLeftAnimation.isRunning)) {
+            _leftAnimation.start(.5f, TimeMode.Loop);
+            _currentAnimation = _leftAnimation;
+        }
+
         _speed *= .9f * deltaTime;		
 	}
 
 	override void update(float deltaTime) {
         _mirrorAnim.update(deltaTime);
-        _idleAnimation.update(deltaTime);
+        _currentAnimation.update(deltaTime);
         _mirrorRecovery.update(deltaTime);
 	}
 
 	override void draw() {
+        _currentAnimation.color = _color;
     	_currentAnimation.draw(_position);
+
         if(_mirrorAnim.isRunning()) {
             Vec2f distanceToPlayer = _position - _player.position;
             float offset = (distanceToPlayer.x > 0) ? 25f : -25f;

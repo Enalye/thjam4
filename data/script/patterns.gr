@@ -1,0 +1,122 @@
+import "data/script/wait.gr"
+
+task fireCircle(Enemy enemy) {
+    int nbShots = 10;
+    float angleRange = 360f;
+    float step = (angleRange / (nbShots as float));
+    float radius = 40f;
+    float speed  = 5f;
+
+    loop {
+        let x, y = getPosition(enemy);
+        float angle = 0f;
+        loop (nbShots) {
+            fireShot(enemy,
+                x + cos(angle) * radius,
+                y + sin(angle) * radius,
+                angle,
+                speed);
+
+            angle = angle + step;
+        }
+
+        wait(120);
+
+        // Check enemy is still alive after the yield
+        if(!isAlive(enemy)) {
+            kill;
+        }
+    }
+}
+
+task flowerShot(Enemy enemy) {
+    int nbShots = 10;
+    float angleRange = 360f;
+    float step = (angleRange / (nbShots as float));
+    float radius = 40f;
+    float speed  = 5f;
+
+    loop {
+        let x, y = getPosition(enemy);
+        float angle = 0f;
+        loop (nbShots) {
+            fireShot(enemy,
+                x + cos(angle) * radius,
+                y + sin(angle) * radius,
+                angle,
+                speed);
+
+            angle = angle + step;
+            wait(2);
+        }
+
+        // Check enemy is still alive after the yield
+        if(!isAlive(enemy)) {
+            kill;
+        }
+    }
+}
+
+task movePatrol(Enemy enemy) {
+    let baseX, baseY = getPosition(enemy);
+    let goesLeft = true;
+
+    loop {
+        let x, y = getPosition(enemy);
+        let movX = 0f;
+
+        if(goesLeft) {
+            movX = -1f;
+        } else {
+            movX = 1f;
+        }
+
+        setMovementSpeed(enemy, movX, 0f);
+        yield;
+
+        // Check enemy is still alive after the yield
+        if(!isAlive(enemy)) {
+            setMovementSpeed(enemy, 0f, 0f);
+            kill;
+        }
+
+        if(goesLeft and (x < (baseX - 100f))) {
+            goesLeft = false;
+        }
+
+        if(!goesLeft and (x > (baseX + 100f))) {
+            goesLeft = true;
+        }
+    }
+}
+
+task moveRandom(Enemy enemy) {
+    let baseX, baseY = getPosition(enemy);
+
+    loop {
+        float x = rand(baseX - 90f, baseX + 90f);
+        float y = rand(baseY - 90f, baseY);
+        setTarget(enemy, x, y);
+
+        wait(60);
+
+        // Check enemy is still alive after the yield
+        if(!isAlive(enemy)) {
+            kill;
+        }
+    }
+}
+
+task moveToPlayer(Enemy enemy) {
+    loop {
+        let x, y = getPlayerPosition();
+        let distance = getDistanceToPlayer(enemy);
+
+        if(distance < 500f) {
+            setTarget(enemy, x, y);
+        } else {
+            setMovementSpeed(enemy, 0f, 0f);
+        }
+        wait(30);
+    }
+}

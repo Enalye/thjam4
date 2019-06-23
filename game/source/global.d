@@ -2,13 +2,16 @@ module game.global;
 
 import atelier;
 import grimoire;
-import game.entity, game.enemy, game.shot, game.doll, game.level, game.hud, game.scene;
+import game.player, game.entity, game.enemy, game.shot, game.doll, game.level, game.hud, game.scene;
 
 // Owned by the scene
 Level currentLevel;
 
 // Virtual machine
 GrEngine vm;
+
+// Player
+Player player;
 
 // Owned by the player instance
 ShotArray playerShots;
