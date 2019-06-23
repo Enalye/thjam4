@@ -1,5 +1,6 @@
 import "data/script/rainbow.gr"
 import "data/script/skull.gr"
+import "data/script/medicine.gr"
 
 main {
 	playerShots();
@@ -7,6 +8,9 @@ main {
 	int enemyIdx = 0;
 	array posx = [500f, 600f, 700f, 800f, 900f];
 
+	Enemy medicine = spawnEnemy("medicine", 1200f, -80f);
+	randomMove(medicine);
+	
 	loop (5) {
 		float x = posx[enemyIdx] as float;
 
@@ -15,6 +19,4 @@ main {
 		fireCircle(enemy);
 		enemyIdx++;
 	}
-
-	Enemy medicine = spawnEnemy("medicine", 3000f, -300f);
 }

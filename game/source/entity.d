@@ -81,7 +81,7 @@ abstract class Entity {
             }
         }
         
-        _position = _position.clamp(Vec2f(16f, -1500f), Vec2f(currentLevel.clampWidth, 200f));
+        _position = _position.clamp(Vec2f(16f, -1500f), Vec2f(currentLevel.clampWidth - 16f, 200f));
     }
 
     abstract void updateMovement(float deltaTime);

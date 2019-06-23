@@ -20,6 +20,7 @@ void addPrimitives() {
 	grAddPrimitive(&grGetPosition, "getPosition", ["enemy"], [grEnemy], [grFloat, grFloat]);
 	grAddPrimitive(&grSetPosition, "setPosition", ["enemy", "x", "y"], [grEnemy, grFloat, grFloat]);
 	grAddPrimitive(&grSetMovementSpeed, "setMovementSpeed", ["enemy", "movX", "movY"], [grEnemy, grFloat, grFloat]);
+	grAddPrimitive(&grSetTarget, "setTarget", ["enemy", "x", "y"], [grEnemy, grFloat, grFloat]);
 	grAddPrimitive(&grRandom, "rand", ["min", "max"], [grFloat, grFloat], [grFloat]);
 	grAddPrimitive(&grIsAlive, "isAlive", ["enemy"], [grEnemy], [grBool]);
 }
@@ -91,6 +92,17 @@ private void grSetPosition(GrCall call) {
 	float y        = call.getFloat("y");
 	enemy.position = Vec2f(x, y);
 }
+
+private void grSetTarget(GrCall call) {
+	Enemy enemy    = call.getUserData!Enemy("enemy");
+	float x        = call.getFloat("x");
+	float y        = call.getFloat("y");
+
+	Vec2f target   = Vec2f(x, y); 
+	Vec2f toTarget = (target - enemy.position).normalized;
+	enemy.movementSpeed = toTarget * 5f;
+}
+
 
 private void grSetMovementSpeed(GrCall call) {
 	Enemy enemy = call.getUserData!Enemy("enemy");
