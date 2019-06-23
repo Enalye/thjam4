@@ -40,5 +40,5 @@ void onLoadComplete() {
 
 void onMainMenu() {
     removeRootGuis();
-    addRootGui(new MenuGui);
+    addRootGui(new IntroGui1);
 }

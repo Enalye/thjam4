@@ -154,6 +154,7 @@ final class HudGui: GuiElement {
         _lifeRatio = cast(float)(player.life) / player.maxLife;
         _lastBarRatio = lerp(_lastBarRatio, _lifeRatio, deltaTime * .1f);
     }
+    import derelict.sdl2.sdl;
 
     override void draw() {
         drawLifeBar();
@@ -162,7 +163,6 @@ final class HudGui: GuiElement {
             sceneGlobal.isLocked = showDialog;
 
             if(showDialog) {
-                import derelict.sdl2.sdl;
                 if(getButtonDown(SDL_BUTTON_LEFT)) {
                     showDialog = false;
                     sceneGlobal.isLocked = false;
@@ -175,6 +175,7 @@ final class HudGui: GuiElement {
     }
 
     void setDialog(string text, int ali, int medi, bool who) {
+        getButtonDown(SDL_BUTTON_LEFT);
         showDialog = true;
         _dialogGui.setText(text);
         _dialogGui.doTransitionState("default");
