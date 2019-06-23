@@ -15,7 +15,7 @@ final class VictoryGui: GuiElement {
     }
 
     this() {
-        _sprite = fetch!Sprite("alice.victory");
+        _sprite = fetch!Sprite("alice.victoire");
         size = _sprite.size;
     }
 
