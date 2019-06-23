@@ -7,9 +7,38 @@ task randomMove(Enemy enemy) {
 		setTarget(enemy, x, y);
 
 		wait(60);
+
+		// Check enemy is still alive after the yield
+        if(!isAlive(enemy)) {
+            kill;
+        }
 	}
 }
 
 task flowerShot(Enemy enemy) {
-	
+    int nbShots = 10;
+    float angleRange = 360f;
+    float step = (angleRange / (nbShots as float));
+    float radius = 40f;
+    float speed  = 5f;
+
+	loop {
+        let x, y = getPosition(enemy);
+        float angle = 0f;
+        loop (nbShots) {
+            fireShot(enemy,
+                x + cos(angle) * radius,
+                y + sin(angle) * radius,
+                angle,
+                speed);
+
+            angle = angle + step;
+            wait(5);
+        }
+
+        // Check enemy is still alive after the yield
+        if(!isAlive(enemy)) {
+            kill;
+        }
+    }
 }
