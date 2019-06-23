@@ -354,6 +354,8 @@ final class Player: Entity {
         _canDoubleJump = false;
         _acceleration = Vec2f.zero;
         _life = _maxLife;
+        _currentDoll.init();
+        _dollThread.init();
     }
 
     void lanceJump(Vec2f target) {
