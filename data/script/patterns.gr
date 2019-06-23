@@ -30,6 +30,23 @@ task fireCircle(Enemy enemy) {
 }
 
 task flowerShot(Enemy enemy) {
+    loop {
+        let distance = getDistanceToPlayer(enemy);
+
+        if(distance < 1000f) {
+            break;
+        }
+
+        yield;
+    }
+
+    int i = 0;
+    loop (12) {
+        startDialog(i);
+        yield;
+        i++;
+    }
+
     int nbShots = 10;
     float angleRange = 360f;
     float step = (angleRange / (nbShots as float));
