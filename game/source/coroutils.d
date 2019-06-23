@@ -1,6 +1,7 @@
 module game.coroutils;
 
 import std.math;
+import std.random;
 import std.stdio: writeln;
 import std.conv;
 import atelier;
@@ -19,6 +20,7 @@ void addPrimitives() {
 	grAddPrimitive(&grGetPosition, "getPosition", ["enemy"], [grEnemy], [grFloat, grFloat]);
 	grAddPrimitive(&grSetPosition, "setPosition", ["enemy", "x", "y"], [grEnemy, grFloat, grFloat]);
 	grAddPrimitive(&grSetMovementSpeed, "setMovementSpeed", ["enemy", "movX", "movY"], [grEnemy, grFloat, grFloat]);
+	grAddPrimitive(&grRandom, "rand", ["min", "max"], [grFloat, grFloat], [grFloat]);
 	grAddPrimitive(&grIsAlive, "isAlive", ["enemy"], [grEnemy], [grBool]);
 }
 
@@ -98,9 +100,10 @@ private void grSetMovementSpeed(GrCall call) {
 }
 
 private void grRandom(GrCall call) {
-	float min = call.getFloat("min");
-	float max = call.getFloat("max");
-	//call.setFloat();
+	Random seed = Random(42);
+	float min   = call.getFloat("min");
+	float max   = call.getFloat("max");
+	call.setFloat(uniform(min, max, seed));
 }
 
 private void grIsAlive(GrCall call) {

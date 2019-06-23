@@ -6,15 +6,15 @@ main {
 
 	int enemyIdx = 0;
 	array posx = [500f, 600f, 700f, 800f, 900f];
-	array posy = [-150f, -150f, -150f, -150f, -150f];
 
 	loop (5) {
 		float x = posx[enemyIdx] as float;
-		float y = posy[enemyIdx] as float;
 
-		Enemy enemy = spawnEnemy("enemy2", x, y);
+		Enemy enemy = spawnEnemy("enemy2", x, -150f);
 		moveSkull(enemy);
 		fireCircle(enemy);
 		enemyIdx++;
 	}
+
+	Enemy medicine = spawnEnemy("medicine", 3000f, -300f);
 }

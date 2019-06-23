@@ -9,7 +9,7 @@ import game.entity, game.shot, game.camera;
 
 alias EnemyArray = IndexedArray!(Enemy, 100u);
 
-final class Enemy: Entity {
+class Enemy: Entity {
 	private {
 		Animation _currentAnim, _idleAnim, _deathAnim;
 		float _lastBarRatio = 1f, _lifeRatio = 1f;
