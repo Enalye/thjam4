@@ -8,10 +8,6 @@ private struct Layer {
     int tileWidth, tileHeight;
     Tileset tileset;
 
-    @property {
-        float clampWidth() { return (tileWidth * 32f) + 16f; }
-    }
-
     void load(JSONValue json) {
         ids = getJsonArrayInt(json, "data");
         tileset = fetch!Tileset("level");
@@ -83,6 +79,10 @@ final class Level {
     private {
         Layer[] _layers;
         int _tileWidth, _tileHeight;
+    }
+
+    @property {
+        float clampWidth() { return (_tileWidth * 32f) + 16f; }
     }
 
     this(Level level) {
