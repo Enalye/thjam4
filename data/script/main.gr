@@ -9,17 +9,17 @@ main {
 	array posx = [500f, 600f, 700f, 800f, 900f];
 
 	Enemy medicine = spawnEnemy("medicine", 2000f, -80f);
-	printEnemyPtr(medicine);
 	randomMove(medicine);
+	yield;
 
 	loop (5) {
 		float x = posx[enemyIdx] as float;
 
 		Enemy enemy = spawnEnemy("enemy2", x, -150f);
 		moveSkull(enemy);
+		yield;
 		fireCircle(enemy);
+		yield;
 		enemyIdx++;
 	}
-
-	printEnemyPtr(medicine);
 }
