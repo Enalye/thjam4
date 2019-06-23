@@ -37,6 +37,14 @@ abstract class Entity {
         int maxLife() { return _maxLife; }
     }
 
+    void init() {
+        _position = Vec2f.zero,
+        _size = Vec2f.one,
+        _speed = Vec2f.zero,
+        _movementSpeed = Vec2f.zero,
+        _acceleration = Vec2f.zero;
+    }
+
     void updatePhysic(float deltaTime) {
         _acceleration = Vec2f.zero;
 

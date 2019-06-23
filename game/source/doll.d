@@ -28,6 +28,11 @@ final class Doll: Entity {
         Timer     _mirrorRecovery;
 	}
 
+    override void init() {
+        super.init();
+        _target = _player.position;
+    }
+
     bool isLocked;
 
 	Vec2f mousePosition = Vec2f.zero;
