@@ -37,6 +37,8 @@ final class SceneGui: GuiElementCanvas {
         Level      _level;
         Sparks     _sparks;
         Background _bg;
+
+        Sprite _a1, _a2, _a3, _c1, _c2, _l, _p;
     }
 
     bool isLocked;
@@ -69,6 +71,22 @@ final class SceneGui: GuiElementCanvas {
         enemyShots = new ShotArray;
         loadScripts();
         sceneGlobal = this;
+
+        _a1 = fetch!Sprite("level.arbre1");
+        _a2 = fetch!Sprite("level.arbre2");
+        _a3 = fetch!Sprite("level.arbre3");
+        _c1 = fetch!Sprite("level.champi1");
+        _c2 = fetch!Sprite("level.champi2");
+        _l = fetch!Sprite("level.lanterne");
+        _p = fetch!Sprite("level.panneau");
+
+        _a1.anchor = Vec2f(.5f, 1f);
+        _a2.anchor = Vec2f(.5f, 1f);
+        _a3.anchor = Vec2f(.5f, 1f);
+        _c1.anchor = Vec2f(.5f, 1f);
+        _c2.anchor = Vec2f(.5f, 1f);
+        _l.anchor = Vec2f(.5f, 1f);
+        _p.anchor = Vec2f(.5f, 1f);
     }
     
     void updateShots(float deltaTime) {
@@ -195,10 +213,18 @@ final class SceneGui: GuiElementCanvas {
         }
     }
 
+    void drawDecors() {
+        _p.draw(Vec2f(625f, -32f));
+
+        _c1.draw(Vec2f(2517f, -32f));
+        _c2.draw(Vec2f(2288f, -32f));
+    }
+
     override void draw() {
         canvas.clearColor = Color(.38f, .41f, .31f);
         auto position = getCameraPosition();
         _bg.draw();
+        drawDecors();
         _level.draw();
         _sparks.draw();
 
