@@ -33,10 +33,10 @@ void createShot(EntityType ownerType, Vec2f pos, Vec2f scale, int damage, Color 
     shot.spriteAngle = normalizedDirection.angle();
 
     if(ownerType == EntityType.PLAYER) {
-    	playerShots.push(shot);
+    	shot.index = playerShots.push(shot);
     }
 
     if(ownerType == EntityType.ENEMY) {
-    	enemyShots.push(shot);
+    	shot.index = enemyShots.push(shot);
     }
 }

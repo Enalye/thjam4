@@ -299,7 +299,7 @@ final class Player: Entity {
         }
     }
 
-    override void handleCollision(int damage) {
+    override void handleCollision(int damage, Shot shot = null) {
         if(_iframesTimer.isRunning)
             return;
         _life = _life - damage;

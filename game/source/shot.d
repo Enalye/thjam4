@@ -16,16 +16,21 @@ class Shot {
         int     _damage = 1;
     }
 
+    int index;
+
     @property {
         bool isAlive() const { return _isAlive; }
         int damage() const { return _damage; }
 
         Vec2f position() { return _position; }
-        Vec2f position(Vec2f newPosition) { return _position = newPosition; }
-        Vec2f direction(Vec2f newDirection) { return _direction = newDirection; }
+        void position(Vec2f newPosition) { _position = newPosition; }
+        Vec2f direction() { return _direction; }
+        void direction(Vec2f newDirection) { _direction = newDirection; }
+
         float timeToLive(float newTTL) { return _timeToLive = newTTL; }
-        int damage(int damage) { return _damage = damage; }
-        float spriteAngle(float spriteAngle) { return _spriteAngle = spriteAngle; }
+        int damage(int damage) { return _damage = damage; }      
+        float spriteAngle() { return _spriteAngle; }
+        void spriteAngle(float spriteAngle) { _spriteAngle = spriteAngle; }
 
         void color(Color color) { _sprite.color = color; }
     }
@@ -58,7 +63,7 @@ class Shot {
 
     bool handleCollision(Entity entity) {
         if(entity.position.distance(_position) < _radius) {
-            entity.handleCollision(damage);
+            entity.handleCollision(damage, this);
             _isAlive = false;
             return true;
         }

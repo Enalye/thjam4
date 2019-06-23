@@ -131,7 +131,17 @@ final class Doll: Entity {
 	}
 
 
-    override void handleCollision(int damage) {
-        // @TODO
+    override void handleCollision(int damage, Shot shot) {
+        if(_type == DollType.SHIELD) {
+            Vec2f oldDirection = shot.direction();
+            Vec2f newDirection = Vec2f(-oldDirection.x, -oldDirection.y);
+            shot.direction = newDirection;
+            shot.spriteAngle = shot.spriteAngle + 180;
+
+            // Swap arrays
+            int index = playerShots.push(shot);       
+            enemyShots.pop(shot.index);
+            shot.index = index;
+        }
     }
 }

@@ -81,7 +81,7 @@ final class Enemy: Entity {
 
 	}
 
-	override void handleCollision(int damage) {
+	override void handleCollision(int damage, Shot shot = null) {
         _life = max(0, _life - damage);
         if(_life <= 0) {
             shakeCamera(Vec2f(10f, 5f), .5f);

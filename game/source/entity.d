@@ -79,5 +79,5 @@ abstract class Entity {
     abstract void update(float deltaTime);
     abstract void draw();
     abstract void fire();
-    abstract void handleCollision(int damage);
+    abstract void handleCollision(int damage, Shot shot = null);
 }
