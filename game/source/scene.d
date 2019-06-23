@@ -112,7 +112,10 @@ final class SceneGui: GuiElementCanvas {
     void loadScripts() {
         vm = new GrEngine;
         addPrimitives();
-        vm.load(grCompileFile("data/script/main.gr"));
+
+        auto bytecode = grCompileFile("data/script/main.gr");
+        //writeln(grDump(bytecode));
+        vm.load(bytecode);
         vm.spawn();
     }
 
