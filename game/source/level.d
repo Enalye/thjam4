@@ -75,9 +75,20 @@ private struct Layer {
     }
 }
 
+private struct ObjLayer {
+    void load(JSONValue json) {
+        auto objects = getJsonArray(json, "objects");
+    }
+
+    void draw() {
+
+    }
+}
+
 final class Level {
     private {
         Layer[] _layers;
+        ObjLayer[] _objLayers;
         int _tileWidth, _tileHeight;
     }
 
@@ -94,11 +105,19 @@ final class Level {
         _tileHeight = getJsonInt(json, "height");
 
         foreach(layerNode; getJsonArray(json, "layers")) {
-            Layer layer;
-            layer.tileWidth = _tileWidth;
-            layer.tileHeight = _tileHeight;
-            layer.load(layerNode);
-            _layers ~= layer;
+            auto type = getJsonStr(layerNode, "type");
+            if(type == "tilelayer") {
+                Layer layer;
+                layer.tileWidth = _tileWidth;
+                layer.tileHeight = _tileHeight;
+                layer.load(layerNode);
+                _layers ~= layer;
+            }
+            else if(type == "objectgroup") {
+                ObjLayer layer;
+                layer.load(layerNode);
+                _objLayers ~= layer;
+            }
         }
     }
 
@@ -120,6 +139,9 @@ final class Level {
 
     void draw() {
         foreach(ref layer; _layers) {
+            layer.draw();
+        }
+        foreach(ref layer; _objLayers) {
             layer.draw();
         }
     }
