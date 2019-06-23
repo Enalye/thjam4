@@ -98,6 +98,9 @@ final class Level {
 
     this(Level level) {
         _layers = level._layers;
+        _objLayers = level._objLayers;
+        _tileWidth = level._tileWidth;
+        _tileHeight = level._tileHeight;
     }
 
     this(JSONValue json) {
