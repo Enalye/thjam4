@@ -19,7 +19,7 @@ enum DollType {
 final class Doll: Entity {
 	private {
         Player    _player;
-		Sprite    _sprite; // @TODO animations instead
+		Animation _idleAnimation, _currentAnimation;
 		float     _threadLength; // Max length from player
 		Vec2f     _target;
         DollType  _type;
@@ -40,13 +40,14 @@ final class Doll: Entity {
     string name;
 
 	this(Player player, Vec2f position, Color color, DollType type, float threadLength = 250f) {
-        _player = player;
-		_sprite = fetch!Sprite("doll");
-        _mirrorAnim = new Animation("mirror", TimeMode.Stopped);
-        _sprite.color = color;
-		_threadLength = threadLength;
-		_position = position;
-        _type     = type;
+        _player               = player;
+		_idleAnimation        = new Animation("doll.idle");
+        _idleAnimation.color  = color;
+        _currentAnimation     = _idleAnimation;
+        _mirrorAnim           = new Animation("mirror", TimeMode.Stopped);
+		_threadLength         = threadLength;
+		_position             = position;
+        _type                 = type;
 
         final switch(_type) with(DollType) { 
         case DollType.SHOT:
@@ -71,6 +72,8 @@ final class Doll: Entity {
             name = "Pragma [Shield]";
             break;
         }
+
+        _idleAnimation.start(.5f, TimeMode.Loop);
 	}
 
 	override void updateMovement(float deltaTime) {
@@ -105,11 +108,12 @@ final class Doll: Entity {
 
 	override void update(float deltaTime) {
         _mirrorAnim.update(deltaTime);
+        _idleAnimation.update(deltaTime);
         _mirrorRecovery.update(deltaTime);
 	}
 
 	override void draw() {
-    	_sprite.draw(_position);
+    	_currentAnimation.draw(_position);
         if(_mirrorAnim.isRunning()) {
             Vec2f distanceToPlayer = _position - _player.position;
             float offset = (distanceToPlayer.x > 0) ? 25f : -25f;
