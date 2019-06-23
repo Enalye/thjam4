@@ -1,12 +1,6 @@
 import "data/script/rainbow.gr"
 import "data/script/skull.gr"
 
-func wait(int n) {
-	loop(n) {
-		yield;
-	}
-}
-
 main {
 	playerShots();
 
@@ -20,6 +14,7 @@ main {
 
 		spawnEnemy(enemyIdx, "enemy2", x, y);
 		moveSkull(enemyIdx);
+		fireCircle(enemyIdx);
 		enemyIdx++;
 	}
 }

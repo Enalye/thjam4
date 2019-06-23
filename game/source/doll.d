@@ -41,25 +41,25 @@ final class Doll: Entity {
 
         final switch(_type) with(DollType) { 
         case DollType.SHOT:
-            name = "Shot Doll";
+            name = "Philia [Rainbow Shot]";
             break;
         case DollType.LASER:
-            name = "Laser Doll";
+            name = "Eros [Laser]";
             break;
         case DollType.EXPLOSIVE:
-            name = "Explosive Doll";
+            name = "Philautia [Explosive]";
             break;
         case DollType.LANCE:
-            name = "Lance Doll";
+            name = "Ludus [Lance]";
             break;
         case DollType.TELEPORT:
-            name = "Teleportation Doll";
+            name = "Agape [Teleportation]";
             break;
         case DollType.BOOMERANG:
-            name = "Boomerang Doll";
+            name = "Storge [Boomerang]";
             break;
         case DollType.SHIELD:
-            name = "Shield Doll";
+            name = "Pragma [Shield]";
             break;
         }
 	}
@@ -103,7 +103,8 @@ final class Doll: Entity {
 	override void fire() {
         final switch(_type) with(DollType) { 
         case DollType.SHOT:
-            createPlayerShot(_position,
+            createShot(EntityType.PLAYER,
+                    _position,
                     Vec2f.one,
                     1,
                     Color.red,
