@@ -16,8 +16,7 @@ final class Enemy: Entity {
 		bool showLifeBar = true;
 	}
 
-	this(int index, string name, Vec2f position) {
-		_index     = index;
+	this(string name, Vec2f position) {
 		_position  = position;
 		_idleAnim  = new Animation(name ~ ".idle");
 		_deathAnim = new Animation(name ~ ".death");

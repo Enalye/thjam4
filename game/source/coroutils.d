@@ -54,12 +54,12 @@ private void grSpawnEnemy(GrCall call) {
 	float y     = call.getFloat("y");
 
 	Enemy enemy = new Enemy(name, Vec2f(x, y));
+	call.setUserData!Enemy(enemy);
 	enemies.push(enemy);
-	call.setUserData(enemy);
 }
 
 private void grFireShot(GrCall call) {
-	Enemy enemy    = call.getUserData("enemy");
+	Enemy enemy    = call.getUserData!Enemy("enemy");
 	float x        = call.getFloat("x");
 	float y        = call.getFloat("y");
 	float angle    = call.getFloat("angle");
@@ -77,27 +77,27 @@ private void grFireShot(GrCall call) {
 }
 
 private void grGetPosition(GrCall call) {
-	Enemy enemy    = call.getUserData("enemy");
+	Enemy enemy    = call.getUserData!Enemy("enemy");
 	Vec2f position = enemy.position; 
 	call.setFloat(position.x);
 	call.setFloat(position.y);
 }
 
 private void grSetPosition(GrCall call) {
-	Enemy enemy    = call.getUserData("enemy");
+	Enemy enemy    = call.getUserData!Enemy("enemy");
 	float x        = call.getFloat("x");
 	float y        = call.getFloat("y");
 	enemy.position = Vec2f(x, y);
 }
 
 private void grSetMovementSpeed(GrCall call) {
-	Enemy enemy = call.getUserData("enemy");
+	Enemy enemy = call.getUserData!Enemy("enemy");
 	float movX  = call.getFloat("movX");
 	float movY  = call.getFloat("movY");
 	enemy.movementSpeed = Vec2f(movX, movY);
 }
 
 private void grIsAlive(GrCall call) {
-	Enemy enemy = call.getUserData("enemy");
+	Enemy enemy = call.getUserData!Enemy("enemy");
 	call.setBool(enemy.isAlive());
 }

@@ -32,7 +32,7 @@ task moveSkull(Enemy enemy) {
     }
 }
 
-task fireCircle(int enemy) {
+task fireCircle(Enemy enemy) {
     int nbShots = 10;
     float angleRange = 360f;
     float step = (angleRange / (nbShots as float));
