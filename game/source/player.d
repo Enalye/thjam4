@@ -52,6 +52,7 @@ final class Player: Entity {
 
 
         _currentDoll = dolls[_dollIndex];
+        _currentDoll.init();
         _dollThread = new DollThread;
         _dollThread.doll = _currentDoll;
         _dollThread.player = this;

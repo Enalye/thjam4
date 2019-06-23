@@ -24,7 +24,11 @@ final class DollThread {
     }
 
     void update(float deltaTime) {
-
+        if(isNaN(doll.position.x) || isNaN(doll.position.y)) {
+            doll.init();
+            init();
+            return;
+        }
         foreach(int i; 0.. _nbPoints) {
             Vec2f acceleration = Vec2f.zero;
             acceleration.y += .5f;
