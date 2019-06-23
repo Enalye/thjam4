@@ -322,6 +322,9 @@ final class Player: Entity {
         _life = _life - damage;
         if(_life < 0) {
             _life = 0;
+            shakeCamera(Vec2f(30f, 15f), 1f);
+            respawn();
+            return true;
         }
 
         _isFalling = true;
@@ -329,18 +332,28 @@ final class Player: Entity {
         
         final switch(_direction) with(Direction) {
         case Right:
-            _movementSpeed.x = -10f;
-            _speed.y = -5f;
+            _movementSpeed.x = -5f;
+            _speed.y = -3f;
             break;
         case Left:
-            _movementSpeed.x = 10f;
-            _speed.y = -5f;
+            _movementSpeed.x = 5f;
+            _speed.y = -3f;
             break;
         }
 
-        shakeCamera(Vec2f(25f, 15f), 1f);
-        _iframesTimer.start(.2f);
+        shakeCamera(Vec2f(15f, 5f), 1f);
+        _iframesTimer.start(1f);
         return true;
+    }
+
+    void respawn() {
+        _position = Vec2f(32f, -_size.y / 2f);
+        _speed = Vec2f.zero;
+        _movementSpeed = Vec2f.zero;
+        _isFalling = true;
+        _canDoubleJump = false;
+        _acceleration = Vec2f.zero;
+        _life = _maxLife;
     }
 
     void lanceJump(Vec2f target) {
