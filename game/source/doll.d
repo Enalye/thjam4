@@ -38,7 +38,7 @@ final class Doll: Entity {
 
 	Vec2f mousePosition  = Vec2f.zero;
 	Vec2f playerPosition = Vec2f.zero;
-    string name;
+    string description;
 
 	this(string name, Player player, Vec2f position, Color color, DollType type, float threadLength = 250f) {
         _player               = player;
@@ -58,25 +58,25 @@ final class Doll: Entity {
 
         final switch(_type) with(DollType) { 
         case DollType.SHOT:
-            name = "Philia [Rainbow Shot]";
+            description = "Philia [Rainbow Shot]";
             break;
         case DollType.LASER:
-            name = "Eros [Laser]";
+            description = "Eros [Laser]";
             break;
         case DollType.EXPLOSIVE:
-            name = "Philautia [Explosive]";
+            description = "Philautia [Explosive]";
             break;
         case DollType.LANCE:
-            name = "Ludus [Lance]";
+            description = "Ludus [Lance]";
             break;
         case DollType.TELEPORT:
-            name = "Agape [Teleportation]";
+            description = "Agape [Teleportation]";
             break;
         case DollType.BOOMERANG:
-            name = "Storge [Boomerang]";
+            description = "Storge [Boomerang]";
             break;
         case DollType.SHIELD:
-            name = "Pragma [Shield]";
+            description = "Pragma [Shield]";
             break;
         }
 

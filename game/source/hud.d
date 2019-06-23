@@ -22,7 +22,7 @@ final class HudGui: GuiElement {
     void changeDoll() {
         if(!player)
             return;
-        _dollLabel.text = player.currentDoll.name;
+        _dollLabel.text = player.currentDoll.description;
     }
 
     override void update(float deltaTime) {
