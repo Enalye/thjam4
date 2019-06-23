@@ -93,7 +93,7 @@ final class Level {
     }
 
     @property {
-        float clampWidth() { return (_tileWidth * 32f) + 16f; }
+        float clampWidth() { return (_tileWidth * 32f) - 16f; }
     }
 
     this(Level level) {

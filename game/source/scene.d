@@ -49,6 +49,8 @@ final class SceneGui: GuiElementCanvas {
         hud.size = size;
         addRootGui(hud);
 
+        currentLevel = _level = fetch!Level("level1");
+
         _player = new Player;
         _camera = createCamera(canvas);
         _camera.followEntity(_player);
@@ -64,8 +66,6 @@ final class SceneGui: GuiElementCanvas {
 
         playerShots = new ShotArray;
         enemyShots = new ShotArray;
-
-        currentLevel = _level = fetch!Level("level1");
         loadScripts();
     }
     
