@@ -1,6 +1,6 @@
 {
 	"name": "game",
-	"description": "Thjam4",
+	"description": "Margatroid Pride",
 	"copyright": "Copyright © 2019",
 	"authors": ["JonathKane", "MrNuage", "Automn", "Enalye"],
 	"dependencies": {
@@ -13,7 +13,7 @@
 			"path": "../grimoire"
 		}
 	},
-	"targetName": "thjam4",
+	"targetName": "margapride",
 	"targetType": "executable",
 	"workingDirectory": "..",
 	"buildTypes": {
