@@ -112,7 +112,7 @@ task moveToPlayer(Enemy enemy) {
         let x, y = getPlayerPosition();
         let distance = getDistanceToPlayer(enemy);
 
-        if(distance < 300f) {
+        if(distance < 500f) {
             setTarget(enemy, x, y);
         } else {
             setMovementSpeed(enemy, 0f, 0f);

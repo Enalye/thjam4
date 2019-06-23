@@ -5,23 +5,35 @@ main {
 	playerShots();
 
 	int enemyIdx = 0;
-	array posx = [500f, 600f, 700f, 800f, 900f];
-
-	Enemy medicine = spawnEnemy("medicine", 7500f, -80f);
-	moveRandom(medicine);
-	yield;
+	float posx   = 500f;
 
 	loop (5) {
-		float x = posx[enemyIdx] as float;
-
-		Enemy enemy = spawnEnemy("enemy2", x, -150f);
+		Enemy enemy = spawnEnemy("enemy1", posx, -150f);
 		movePatrol(enemy);
 		yield;
 		fireCircle(enemy);
 		yield;
-		enemyIdx++;
+		posx = posx + 150f;
 	}
 
-	Enemy ghost = spawnEnemy("enemy3", 1500f, -300f);
+	Enemy ghost = spawnEnemy("enemy3", 1800f, -300f);
 	moveToPlayer(ghost);
+	yield;
+
+	float posx2 = 5300f;
+
+	loop (5) {
+		Enemy enemy2 = spawnEnemy("enemy2", posx2, -150f);
+		movePatrol(enemy2);
+		yield;
+		fireCircle(enemy2);
+		yield;
+		posx2 = posx2 + 150f;
+	}
+
+	Enemy medicine = spawnEnemy("medicine", 7500f, -80f);
+	moveRandom(medicine);
+	yield;
+	flowerShot(medicine);
+	yield;
 }
