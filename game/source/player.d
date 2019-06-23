@@ -12,7 +12,7 @@ final class Player: Entity {
     private {
         bool        _hasPlayerInput;
         Animation   _currentAnim, _idleAnim, _runAnim, _fallAnim, _stopAnim, _jumpAnim, _recoverAnim;
-        Timer       _shotTimer, _trailTimer, _iframesTimer;
+        Timer       _shotTimer, _trailTimer, _iframesTimer, _dashTimer, _dashIdleTimer;
         bool        _wasFalling;
         Doll        _currentDoll;
         DollThread  _dollThread;
@@ -61,6 +61,30 @@ final class Player: Entity {
         hud.changeDoll();
     }
 
+    private int _dashDirection;
+    private bool _dashIdle;
+    bool dash(int dir) {
+        if(_dashTimer.isRunning) {
+            return true;
+        }
+        else if(dir == 2) {
+            if(!_dashIdleTimer.isRunning && !_dashIdle) {
+                _dashIdleTimer.start(.1f);
+                _dashIdle = true;
+            }
+        }
+        else if(_dashIdleTimer.isRunning && _dashDirection == dir) {
+            _dashTimer.start(.2f);
+            _dashIdle = false;
+            return true;
+        }
+        else {
+            _dashDirection = dir;
+            _dashIdle = false;
+        }
+        return false;
+    }
+
     private {
         Timer _dollSelectTimer;
         int _dollIndex;
@@ -92,6 +116,8 @@ final class Player: Entity {
             _movementSpeed.x = _movementSpeed.x > -5f ?
                 _movementSpeed.x - deltaTime * (_isFalling ? .3f : .8f) :
                 -5f;
+            if(dash(0))
+                _movementSpeed.x = -15f;
 
             _direction = Direction.Left;
             _idleAnim.flip = Flip.HorizontalFlip;
@@ -108,6 +134,9 @@ final class Player: Entity {
                 _movementSpeed.x + deltaTime * (_isFalling ? .3f : .8f) :
                 5f;
 
+            if(dash(1))
+                _movementSpeed.x = 15f;
+
             _direction = Direction.Right;
             _idleAnim.flip = Flip.NoFlip;
             _runAnim.flip = Flip.NoFlip;
@@ -118,6 +147,7 @@ final class Player: Entity {
             _hasPlayerInput = true;
         }
         if(!isMovingHorizontally) {
+            dash(2);
             _movementSpeed.x *= deltaTime * _isFalling ? .999f : .8f;
             _hasPlayerInput = false;
         }
@@ -228,6 +258,8 @@ final class Player: Entity {
     }
 
     override void update(float deltaTime) {
+        _dashIdleTimer.update(deltaTime);
+        _dashTimer.update(deltaTime);
         _iframesTimer.update(deltaTime);
         _dollSelectTimer.update(deltaTime);
 
