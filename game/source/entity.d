@@ -4,6 +4,8 @@ import atelier;
 import grimoire;
 import game.shot, game.global;
 
+enum EntityType { PLAYER, ENEMY };
+
 abstract class Entity {
     protected {
         Vec2f _position = Vec2f.zero,

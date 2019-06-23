@@ -1,3 +1,5 @@
+import "data/script/wait.gr"
+
 task moveSkull(int enemyIdx) {
     let baseX, baseY = getPosition(enemyIdx);
     let goesLeft = true;
@@ -28,5 +30,34 @@ task moveSkull(int enemyIdx) {
     	if(!goesLeft and (x > (baseX + 100f))) {
     		goesLeft = true;
     	}
+    }
+}
+
+task fireCircle(int enemyIdx) {
+    int nbShots = 10;
+    float angleRange = 360f;
+    float step = (angleRange / (nbShots as float));
+    float radius = 40f;
+    float speed  = 5f;
+
+    loop {
+        let x, y = getPosition(enemyIdx);
+        float angle = 0f;
+        loop (nbShots) {
+            fireShot(enemyIdx,
+                x + cos(angle) * radius,
+                y + sin(angle) * radius,
+                angle,
+                speed);
+
+            angle = angle + step;
+        }
+
+        wait(120);
+
+        // Check enemy is still alive after the yield
+        if(!isAlive(enemyIdx)) {
+            kill;
+        }
     }
 }

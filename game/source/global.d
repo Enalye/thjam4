@@ -2,7 +2,7 @@ module game.global;
 
 import atelier;
 import grimoire;
-import game.enemy, game.shot, game.doll, game.level, game.hud;
+import game.entity, game.enemy, game.shot, game.doll, game.level, game.hud;
 
 // Owned by the scene
 Level currentLevel;
@@ -22,9 +22,8 @@ ShotArray enemyShots;
 
 HudGui hud;
 
-void createPlayerShot(Vec2f pos, Vec2f scale, int damage, Color color, Vec2f direction, float speed, float timeToLive) {
-    Shot shot = new Shot("shot", color, scale);
-
+void createShot(EntityType ownerType, Vec2f pos, Vec2f scale, int damage, Color color, Vec2f direction, float speed, float timeToLive) {
+	Shot shot = new Shot("shot", color, scale);
     Vec2f normalizedDirection = direction.normalized;
 
     shot.position    = pos;
@@ -33,6 +32,11 @@ void createPlayerShot(Vec2f pos, Vec2f scale, int damage, Color color, Vec2f dir
     shot.damage      = damage;
     shot.spriteAngle = normalizedDirection.angle();
 
-    playerShots.push(shot);
-    //playSound(SoundType.Shot);
+    if(ownerType == EntityType.PLAYER) {
+    	playerShots.push(shot);
+    }
+
+    if(ownerType == EntityType.ENEMY) {
+    	enemyShots.push(shot);
+    }
 }

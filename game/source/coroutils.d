@@ -8,14 +8,25 @@ import grimoire;
 import game.global, game.entity, game.shot, game.enemy;
 
 void addPrimitives() {
+	grAddPrimitive(&grCos, "cos", ["value"], [grFloat], [grFloat]);
+	grAddPrimitive(&grSin, "sin", ["value"], [grFloat], [grFloat]);
 	grAddPrimitive(&grPosSin, "psin", ["value"], [grFloat], [grFloat]);
 	grAddPrimitive(&grPrint, "print", ["value"], [grString]);
 	grAddPrimitive(&grSetColor, "setColor", ["r", "g", "b"],  [grFloat, grFloat, grFloat]);
 	grAddPrimitive(&grSpawnEnemy, "spawnEnemy", ["index", "name", "x", "y"], [grInt, grString, grFloat, grFloat]);
+	grAddPrimitive(&grFireShot, "fireShot", ["index", "x", "y", "angle", "speed"], [grInt, grFloat, grFloat, grFloat, grFloat]);
 	grAddPrimitive(&grGetPosition, "getPosition", ["index"], [grInt], [grFloat, grFloat]);
 	grAddPrimitive(&grSetPosition, "setPosition", ["index", "x", "y"], [grInt, grFloat, grFloat]);
 	grAddPrimitive(&grSetMovementSpeed, "setMovementSpeed", ["index", "movX", "movY"], [grInt, grFloat, grFloat]);
 	grAddPrimitive(&grIsAlive, "isAlive", ["index"], [grInt], [grBool]);
+}
+
+private void grCos(GrCall call) {
+	call.setFloat((cos(call.getFloat("value") * (PI / 180))));
+}
+
+private void grSin(GrCall call) {
+	call.setFloat((sin(call.getFloat("value") * (PI / 180))));
 }
 
 private void grPosSin(GrCall call) {
@@ -44,6 +55,26 @@ private void grSpawnEnemy(GrCall call) {
 
 	Enemy enemy = new Enemy(index, name, Vec2f(x, y));
 	enemies.push(enemy);
+}
+
+private void grFireShot(GrCall call) {
+	int index = call.getInt("index");
+	float x   = call.getFloat("x");
+	float y   = call.getFloat("y");
+	float angle = call.getFloat("angle");
+	float speed = call.getFloat("speed");
+
+	Enemy enemy    = enemies[index];
+	Vec2f spawnPos = Vec2f(x, y);
+
+	createShot(EntityType.ENEMY,
+		spawnPos,
+		Vec2f.one,
+		1, // damage
+		Color.white,
+		spawnPos - enemy.position,
+		speed,
+		5 * 60f);
 }
 
 private void grGetPosition(GrCall call) {
